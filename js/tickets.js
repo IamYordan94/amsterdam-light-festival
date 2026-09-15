@@ -517,7 +517,7 @@
       : "";
 
     stepHost.innerHTML = "<div>" + stepHead("03", "Choose your cruise") +
-      '<p class="mt-4 max-w-xl text-paper/65">' + esc(dateLabel(state.date)) + " — " + esc(b.name) +
+      '<p class="mt-4 max-w-xl text-paper/65">' + esc(dateLabel(state.date)) + " — " + esc(b.kind) +
       ". These are the operators currently offering this kind of boat. Prices and times are theirs, checked on the booking page.</p>" +
       '<div class="mt-8 grid gap-3">' +
       (cards || '<p class="border-2 border-paper/20 p-5 text-sm text-paper/60">No offers configured for this category yet.</p>') +
@@ -556,7 +556,9 @@
     if (state.children > 0) guestText += ", " + state.children + " child" + (state.children === 1 ? "" : "ren");
 
     var rows = summaryRow("Date & time", dateTime) +
-      summaryRow("Boat", b ? b.kind + " · " + b.durationMinutes + " min" : "—") +
+      summaryRow("Boat", b
+        ? b.kind + " · " + ((affNow && optNow && optNow.durationMinutes) ? optNow.durationMinutes : b.durationMinutes) + " min"
+        : "—") +
       /* in partner mode the dock is chosen on the partner's page, so never invent one */
       (affNow ? "" : summaryRow("Departure dock", d ? d.name : "—")) +
       summaryRow("Guests", guestText) +
@@ -574,8 +576,10 @@
             (optNow.reviews ? '<div class="text-xs text-paper/45">' + esc(String(optNow.rating || "")) + " ★ from " + esc(String(optNow.reviews)) + " reviews</div>" : "")
           : '<p class="text-paper/50">Pick one of the offers to see its price.</p>') +
         '<div class="mt-5 flex items-baseline justify-between border-t border-paper/15 pt-5">' +
-        '<span class="label-xs text-paper/60">From, per person</span>' +
-        '<span class="font-display text-4xl text-mint">' + (cheapest ? money(cheapest) : "—") + "</span></div></div>";
+        '<span class="label-xs text-paper/60">' + (optNow ? "Price from, per person" : "Cheapest in this category") + "</span>" +
+        '<span class="font-display text-4xl text-mint">' +
+        (optNow && optNow.priceFrom ? money(optNow.priceFrom) : (cheapest ? money(cheapest) : "—")) +
+        "</span></div></div>";
     } else {
       pricing = q
         ? '<div class="mt-6 space-y-3 text-sm">' +
