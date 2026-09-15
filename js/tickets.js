@@ -65,6 +65,7 @@
     touched: false,
     pending: false,
     monthIndex: 0,
+    optionIndex: null,
     bookingError: null
   };
 
@@ -187,9 +188,18 @@
 
   /* --------------------------------------------------------------- step bar */
   var STEP_LABELS = ["Date", "Boat", "Time & dock", "Guests & details"];
+  function stepLabels() {
+    /* in partner mode step 3 is about picking the operator's cruise, not our times/docks */
+    if (affiliateFor(state.boatCode)) {
+      var l = STEP_LABELS.slice();
+      l[2] = "Choose your cruise";
+      return l;
+    }
+    return STEP_LABELS;
+  }
   function renderStepBar() {
     if (!stepBarInner) return;
-    stepBarInner.innerHTML = STEP_LABELS.map(function (label, i) {
+    stepBarInner.innerHTML = stepLabels().map(function (label, i) {
       var done = i < state.step;
       var current = i === state.step;
       var cls = "label-xs flex flex-1 shrink-0 items-center justify-center gap-2 whitespace-nowrap px-3 py-4 transition-colors md:gap-3 md:px-4 " +
@@ -311,6 +321,8 @@
 
   function renderTime() {
     var b = boat();
+    /* partner mode: this step becomes "pick which operator's cruise you want" */
+    if (affiliateFor(state.boatCode)) return renderOffers(b);
     var rows = availability();
     var slotHtml = rows.map(function (row) {
       var entry = row.boats.filter(function (x) { return x.boatCode === state.boatCode; })[0];
@@ -478,6 +490,49 @@
     if (emailInput) emailInput.addEventListener("input", function () { state.email = emailInput.value; refreshErrors(); });
   }
 
+  /* ------------------------------------------------- offers (partner mode only) */
+  function renderOffers(b) {
+    var aff = affiliateFor(b.code);
+    var opts = aff.options || [];
+    var cards = opts.map(function (o, i) {
+      var selected = state.optionIndex === i;
+      return '<button type="button" data-option="' + i + '" class="flex w-full items-start gap-4 border-2 p-5 text-left transition-colors ' +
+        (selected ? "border-mint bg-mint/10" : "border-paper/20 hover:border-paper") + '">' +
+        '<span class="mt-1 flex h-5 w-5 shrink-0 items-center justify-center border-2 ' +
+        (selected ? "border-mint bg-mint text-night" : "border-paper/40") + '">' + (selected ? icon("check", 13) : "") + "</span>" +
+        '<span class="flex-1">' +
+        '<span class="label-xs ' + (o.provider === "viator" ? "text-magenta" : "text-mint") + '">' + esc(PARTNER_NAMES[o.provider] || o.provider || "partner") + "</span>" +
+        '<span class="headline mt-2 block text-lg">' + esc(o.title || "") + "</span>" +
+        (o.note ? '<span class="mt-1 block text-sm text-paper/65">' + esc(o.note) + "</span>" : "") +
+        '<span class="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs uppercase tracking-[0.14em] text-paper/55">' +
+        (o.durationMinutes ? '<span class="flex items-center gap-2">' + icon("clock", 13, "text-magenta") + " " + o.durationMinutes + " min</span>" : "") +
+        (o.reviews ? "<span>" + esc(String(o.rating || "")) + " ★ · " + esc(String(o.reviews)) + " reviews</span>" : "") +
+        "</span></span>" +
+        '<span class="shrink-0 text-right"><span class="font-display text-2xl">' +
+        (o.priceFrom ? "from " + money(o.priceFrom) : "") + "</span></span></button>";
+    }).join("");
+
+    var allLink = aff.categoryUrl
+      ? '<a href="' + esc(aff.categoryUrl) + '" target="_blank" rel="noopener sponsored" class="btn-outline on-dark mt-6 text-paper">See everything in this category ' + icon("arrow-up-right", 14) + "</a>"
+      : "";
+
+    stepHost.innerHTML = "<div>" + stepHead("03", "Choose your cruise") +
+      '<p class="mt-4 max-w-xl text-paper/65">' + esc(dateLabel(state.date)) + " — " + esc(b.name) +
+      ". These are the operators currently offering this kind of boat. Prices and times are theirs, checked on the booking page.</p>" +
+      '<div class="mt-8 grid gap-3">' +
+      (cards || '<p class="border-2 border-paper/20 p-5 text-sm text-paper/60">No offers configured for this category yet.</p>') +
+      "</div>" + allLink +
+      '<p class="mt-6 text-xs leading-relaxed text-paper/45">Every booking is completed on the operator\'s or the platform\'s own page. We may earn a commission — it never changes the price you pay.</p>' +
+      "</div>";
+
+    stepHost.querySelectorAll("button[data-option]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        state.optionIndex = Number(btn.getAttribute("data-option"));
+        renderAll();
+      });
+    });
+  }
+
   /* ------------------------------------------------------------------- aside */
   var ICON_BY_ROW = { "Date & time": "clock", Boat: "ship", "Departure dock": "map-pin", Guests: "users" };
   function summaryRow(label, value) {
@@ -490,6 +545,8 @@
     var b = boat();
     var d = dock();
     var q = quote();
+    var affNow = affiliateFor(state.boatCode);
+    var optNow = affNow ? (affNow.options || [])[state.optionIndex] : null;
 
     var dateTime = dateLabel(state.date) || "—";
     if (state.time && b) dateTime += " · " + state.time + "–" + addMinutes(state.time, b.durationMinutes);
@@ -500,28 +557,46 @@
 
     var rows = summaryRow("Date & time", dateTime) +
       summaryRow("Boat", b ? b.kind + " · " + b.durationMinutes + " min" : "—") +
-      summaryRow("Departure dock", d ? d.name : "—") +
-      summaryRow("Guests", guestText);
+      /* in partner mode the dock is chosen on the partner's page, so never invent one */
+      (affNow ? "" : summaryRow("Departure dock", d ? d.name : "—")) +
+      summaryRow("Guests", guestText) +
+      (affNow ? summaryRow("Cruise", optNow ? optNow.title : "Not chosen yet") : "");
 
-    var pricing = q
-      ? '<div class="mt-6 space-y-3 text-sm">' +
-        q.lines.map(function (l) {
-          return '<div class="flex justify-between gap-4 text-paper/75"><span>' + esc(l.label) + (l.quantity > 1 ? " × " + l.quantity : "") + "</span>" +
-            '<span class="tabular-nums">' + money(l.total) + "</span></div>";
-        }).join("") +
-        '<div class="flex justify-between gap-4 text-paper/50"><span>Booking fee</span><span class="tabular-nums">' + money(q.bookingFee) + "</span></div>" +
+    /* partner mode: show the real offer's price, never the demo price list */
+    var pricing;
+    if (affNow) {
+      var prices = (affNow.options || []).map(function (o) { return o.priceFrom; }).filter(Boolean);
+      var cheapest = prices.length ? Math.min.apply(null, prices) : null;
+      pricing = '<div class="mt-6 space-y-3 text-sm">' +
+        (optNow
+          ? '<div class="flex justify-between gap-4 text-paper/75"><span>' + esc(optNow.title) + "</span>" +
+            '<span class="tabular-nums">' + (optNow.priceFrom ? "from " + money(optNow.priceFrom) : "") + "</span></div>" +
+            (optNow.reviews ? '<div class="text-xs text-paper/45">' + esc(String(optNow.rating || "")) + " ★ from " + esc(String(optNow.reviews)) + " reviews</div>" : "")
+          : '<p class="text-paper/50">Pick one of the offers to see its price.</p>') +
         '<div class="mt-5 flex items-baseline justify-between border-t border-paper/15 pt-5">' +
-        '<span class="label-xs text-paper/60">' + (affiliateFor(state.boatCode) ? "Estimated total" : "Total") + "</span>" +
-        '<span class="font-display text-4xl text-mint">' + money(q.totalCents) + "</span></div></div>"
-      : '<p class="mt-6 text-sm text-paper/50">Pick a boat to see the price breakdown.</p>';
+        '<span class="label-xs text-paper/60">From, per person</span>' +
+        '<span class="font-display text-4xl text-mint">' + (cheapest ? money(cheapest) : "—") + "</span></div></div>";
+    } else {
+      pricing = q
+        ? '<div class="mt-6 space-y-3 text-sm">' +
+          q.lines.map(function (l) {
+            return '<div class="flex justify-between gap-4 text-paper/75"><span>' + esc(l.label) + (l.quantity > 1 ? " × " + l.quantity : "") + "</span>" +
+              '<span class="tabular-nums">' + money(l.total) + "</span></div>";
+          }).join("") +
+          '<div class="flex justify-between gap-4 text-paper/50"><span>Booking fee</span><span class="tabular-nums">' + money(q.bookingFee) + "</span></div>" +
+          '<div class="mt-5 flex items-baseline justify-between border-t border-paper/15 pt-5">' +
+          '<span class="label-xs text-paper/60">Total</span>' +
+          '<span class="font-display text-4xl text-mint">' + money(q.totalCents) + "</span></div></div>"
+        : '<p class="mt-6 text-sm text-paper/50">Pick a boat to see the price breakdown.</p>';
+    }
 
     aside.innerHTML = '<div class="sticky top-40 border-2 border-paper/20 bg-[#0c1238] p-6 md:p-8">' +
       '<p class="label-xs text-mint">Your cruise</p>' +
-      '<h2 class="headline mt-4 text-2xl">' + esc(b ? b.name : "Nothing selected yet") + "</h2>" +
+      '<h2 class="headline mt-4 text-2xl">' + esc(b ? (affNow ? b.kind : b.name) : "Nothing selected yet") + "</h2>" +
       '<ul class="mt-7 space-y-4 border-y border-paper/15 py-6 text-sm">' + rows + "</ul>" +
       pricing +
       '<p class="mt-7 text-xs leading-relaxed text-paper/40">' +
-      (affiliateFor(state.boatCode)
+      (affNow
         ? "Prices shown are our booking partner's current prices. We may earn a commission when you book — it never changes what you pay."
         : "Free cancellation up to 24 hours before departure. Demo site — no payment is taken.") +
       "</p></div>";
@@ -529,7 +604,13 @@
 
   /* --------------------------------------------------------------------- nav */
   function canContinue() {
-    return [!!state.date, !!state.boatCode, !!(state.time && state.dockCode), detailsValid()][state.step];
+    var partner = !!affiliateFor(state.boatCode);
+    return [
+      !!state.date,
+      !!state.boatCode,
+      partner ? state.optionIndex !== null : !!(state.time && state.dockCode),
+      partner ? guests() >= 1 : detailsValid()
+    ][state.step];
   }
   function detailsValid() {
     return state.name.trim().length >= 2 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(state.email) && guests() >= 1;
@@ -557,9 +638,14 @@
     if (state.step < 3) {
       html += '<button type="button" id="alf-next" class="btn-solid disabled:opacity-40"' + (canContinue() ? "" : " disabled") + ">Continue " + icon("arrow-right", 16) + "</button>";
     } else if (affiliateFor(state.boatCode)) {
-      /* live funnel: hand the visitor to the partner's own booking page */
-      html += '<button type="button" id="alf-affiliate" class="btn-solid"' + (guests() < 1 ? " disabled" : "") + ">Check availability on " +
-        esc(partnerName(state.boatCode)) + " " + icon("arrow-up-right", 16) + "</button>";
+      /* live funnel: hand the visitor to the chosen offer's own booking page */
+      var aff = affiliateFor(state.boatCode);
+      var opts = aff.options || [];
+      var opt = opts[state.optionIndex] || null;
+      var nameFor = opt && opt.provider ? (PARTNER_NAMES[opt.provider] || "our partner") : partnerName(state.boatCode);
+      var needsChoice = opts.length > 0 && !opt;
+      html += '<button type="button" id="alf-affiliate" class="btn-solid"' + (needsChoice || guests() < 1 ? " disabled" : "") + ">" +
+        (needsChoice ? "Select an offer above" : "Check availability on " + esc(nameFor) + " " + icon("arrow-up-right", 16)) + "</button>";
     } else {
       var q = quote();
       var label = state.pending
@@ -579,7 +665,10 @@
     if (affiliateBtn) {
       affiliateBtn.addEventListener("click", function () {
         var aff = affiliateFor(state.boatCode);
-        if (aff) window.open(affiliateUrl(aff), "_blank", "noopener");
+        if (!aff) return;
+        var opt = (aff.options || [])[state.optionIndex] || null;
+        var url = opt && opt.url ? opt.url : (aff.fallbackUrl || aff.categoryUrl || aff.url);
+        if (url) window.open(affiliateUrl({ url: url }), "_blank", "noopener");
       });
     }
   }

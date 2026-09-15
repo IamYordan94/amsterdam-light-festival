@@ -200,7 +200,10 @@ window.ALF_DATA = {
     "tone": "mint",
     "affiliate": {
      "provider": "",
-     "url": ""
+     "url": "",
+     "categoryUrl": "",
+     "fallbackUrl": "",
+     "options": []
     }
    },
    {
@@ -218,7 +221,10 @@ window.ALF_DATA = {
     "tone": "sky",
     "affiliate": {
      "provider": "",
-     "url": ""
+     "url": "",
+     "categoryUrl": "",
+     "fallbackUrl": "",
+     "options": []
     }
    },
    {
@@ -236,7 +242,10 @@ window.ALF_DATA = {
     "tone": "magenta",
     "affiliate": {
      "provider": "",
-     "url": ""
+     "url": "",
+     "categoryUrl": "",
+     "fallbackUrl": "",
+     "options": []
     }
    }
   ],
