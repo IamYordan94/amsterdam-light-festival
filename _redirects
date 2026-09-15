@@ -1,0 +1,3 @@
+/artworks  /artworks.html  200
+/tickets   /tickets.html   200
+/ticket/*  /ticket.html    200

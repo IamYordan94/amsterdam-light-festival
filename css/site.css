@@ -1,0 +1,12 @@
+/* Additions for the static rebuild. style.css is the original compiled stylesheet,
+   untouched — everything I add lives here. */
+
+/* Progressive enhancement: without JS the scroll-reveal elements must still be visible. */
+html:not(.js) .reveal,
+.no-js .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+/* The wizard fallback text uses the same voice as the rest of the site. */
+[hidden] { display: none !important; }
