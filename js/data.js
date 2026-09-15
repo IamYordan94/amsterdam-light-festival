@@ -197,7 +197,11 @@ window.ALF_DATA = {
     "adultPrice": 2650,
     "childPrice": 1400,
     "image": "/images/boat-spheres.jpg",
-    "tone": "mint"
+    "tone": "mint",
+    "affiliate": {
+     "provider": "",
+     "url": ""
+    }
    },
    {
     "id": 5,
@@ -211,7 +215,11 @@ window.ALF_DATA = {
     "adultPrice": 3250,
     "childPrice": 1750,
     "image": "/images/cruise-arch.jpg",
-    "tone": "sky"
+    "tone": "sky",
+    "affiliate": {
+     "provider": "",
+     "url": ""
+    }
    },
    {
     "id": 6,
@@ -225,7 +233,11 @@ window.ALF_DATA = {
     "adultPrice": 4500,
     "childPrice": 2500,
     "image": "/images/tower-boat.jpg",
-    "tone": "magenta"
+    "tone": "magenta",
+    "affiliate": {
+     "provider": "",
+     "url": ""
+    }
    }
   ],
   "docks": [
@@ -392,6 +404,16 @@ window.ALF_DATA = {
    "2027-01-17"
   ],
   "festivalStart": "2026-11-26",
-  "festivalEnd": "2027-01-17"
+  "festivalEnd": "2027-01-17",
+  "partners": {
+   "viator": {
+    "partnerId": "",
+    "trackingParams": "pid=YOUR_PID&mcid=42383&medium=link&medium_version=selector"
+   },
+   "getyourguide": {
+    "partnerId": "",
+    "trackingParams": "partner_id=YOUR_PARTNER_ID"
+   }
+  }
  }
 };

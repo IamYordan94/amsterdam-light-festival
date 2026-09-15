@@ -12,7 +12,33 @@
   var addons = C.addons || [];
   var slots = C.slots || [];
   var dates = C.dates || [];
+  /* Booking partners (affiliate mode). Fill these in js/data.js to switch the last step
+     from the built-in demo booking to a hand-off to the real product page. */
+  var partners = C.partners || {};
+  var PARTNER_NAMES = { viator: "Viator", getyourguide: "GetYourGuide" };
   if (!boats.length || !dates.length) return;
+
+  function affiliateFor(code) {
+    var b = boats.filter(function (x) { return x.code === code; })[0];
+    var aff = b && b.affiliate;
+    return aff && aff.url ? aff : null;
+  }
+  function affiliateUrl(aff) {
+    var map = {
+      date: state.date || "",
+      time: state.time || "",
+      adults: state.adults,
+      children: state.children,
+      guests: guests()
+    };
+    return Object.keys(map).reduce(function (url, key) {
+      return url.replace(new RegExp("\\{" + key + "\\}", "g"), encodeURIComponent(map[key]));
+    }, aff.url);
+  }
+  function partnerName(code) {
+    var aff = affiliateFor(code);
+    return aff ? (PARTNER_NAMES[aff.provider] || "our booking partner") : "";
+  }
 
   /* --------------------------------------------------------------- containers */
   var stepBarInner = document.querySelector("div.sticky > div.scrollbar-none");
@@ -153,6 +179,7 @@
       minus: '<path d="M5 12h14"></path>',
       plus: '<path d="M5 12h14"></path><path d="M12 5v14"></path>',
       "circle-alert": '<circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line>',
+      "arrow-up-right": '<path d="M7 7h10v10"></path><path d="M7 17 17 7"></path>',
       "loader-circle": '<path d="M21 12a9 9 0 1 1-6.219-8.56"></path>'
     };
     return '<svg xmlns="http://www.w3.org/2000/svg" width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-' + name + (extraClass ? " " + extraClass : "") + '" aria-hidden="true">' + (paths[name] || "") + "</svg>";
@@ -355,7 +382,11 @@
     }
 
     var seatsLine = "";
-    if (seats !== null) {
+    var affiliateMode = !!affiliateFor(state.boatCode);
+    if (affiliateMode) {
+      /* in affiliate mode the real seat count lives on the partner's page — never invent one */
+      seatsLine = "";
+    } else if (seats !== null) {
       var over = party > seats;
       seatsLine = '<p class="mt-4 flex items-center gap-2 text-sm ' + (over ? "text-magenta" : "text-paper/55") + '">' +
         (over ? icon("circle-alert", 15) : "") +
@@ -395,13 +426,21 @@
       ? '<p class="mt-7 flex items-center gap-2 border-2 border-magenta p-4 text-sm text-magenta">' + icon("circle-alert", 16, "shrink-0") + " " + esc(state.bookingError) + "</p>"
       : "";
 
+    var rightPanel = affiliateMode
+      ? '<div><p class="label-xs text-magenta">What happens next</p><div class="mt-5 grid gap-3">' +
+        '<p class="border-2 border-paper/20 p-5 text-sm leading-relaxed text-paper/70">Your date and boat are kept — that is the cruise you are booking.</p>' +
+        '<p class="border-2 border-paper/20 p-5 text-sm leading-relaxed text-paper/70">Departure time, dock and any extras are chosen on ' + esc(partnerName(state.boatCode)) + "'s own secure page.</p>" +
+        '<p class="border-2 border-paper/20 p-5 text-sm leading-relaxed text-paper/70">They take the payment and email the tickets. Nothing is charged on this site.</p>' +
+        "</div></div>"
+      : '<div><p class="label-xs text-magenta">Add-ons</p><div class="mt-5 grid gap-3">' + addonHtml + "</div></div>";
+
     stepHost.innerHTML = "<div>" + stepHead("04", "Guests & details") +
       '<div class="mt-8 grid gap-8 xl:grid-cols-2 xl:gap-10">' +
       "<div><div class=\"grid gap-4\">" +
       counter("adults", "Adults", b ? money(b.adultPrice) + " each" : "", state.adults, 0) +
       counter("children", "Children 4–12", b ? money(b.childPrice) + " each" : "Under 4 sail free", state.children, 0) +
-      "</div>" + seatsLine + holder + "</div>" +
-      '<div><p class="label-xs text-magenta">Add-ons</p><div class="mt-5 grid gap-3">' + addonHtml + "</div></div>" +
+      "</div>" + seatsLine + (affiliateMode ? "" : holder) + "</div>" +
+      rightPanel +
       "</div>" + errorBox + "</div>";
 
     stepHost.querySelectorAll("button[data-count]").forEach(function (btn) {
@@ -472,7 +511,7 @@
         }).join("") +
         '<div class="flex justify-between gap-4 text-paper/50"><span>Booking fee</span><span class="tabular-nums">' + money(q.bookingFee) + "</span></div>" +
         '<div class="mt-5 flex items-baseline justify-between border-t border-paper/15 pt-5">' +
-        '<span class="label-xs text-paper/60">Total</span>' +
+        '<span class="label-xs text-paper/60">' + (affiliateFor(state.boatCode) ? "Estimated total" : "Total") + "</span>" +
         '<span class="font-display text-4xl text-mint">' + money(q.totalCents) + "</span></div></div>"
       : '<p class="mt-6 text-sm text-paper/50">Pick a boat to see the price breakdown.</p>';
 
@@ -481,7 +520,11 @@
       '<h2 class="headline mt-4 text-2xl">' + esc(b ? b.name : "Nothing selected yet") + "</h2>" +
       '<ul class="mt-7 space-y-4 border-y border-paper/15 py-6 text-sm">' + rows + "</ul>" +
       pricing +
-      '<p class="mt-7 text-xs leading-relaxed text-paper/40">Free cancellation up to 24 hours before departure. Demo site — no payment is taken.</p></div>';
+      '<p class="mt-7 text-xs leading-relaxed text-paper/40">' +
+      (affiliateFor(state.boatCode)
+        ? "Prices shown are our booking partner's current prices. We may earn a commission when you book — it never changes what you pay."
+        : "Free cancellation up to 24 hours before departure. Demo site — no payment is taken.") +
+      "</p></div>";
   }
 
   /* --------------------------------------------------------------------- nav */
@@ -513,6 +556,10 @@
     }
     if (state.step < 3) {
       html += '<button type="button" id="alf-next" class="btn-solid disabled:opacity-40"' + (canContinue() ? "" : " disabled") + ">Continue " + icon("arrow-right", 16) + "</button>";
+    } else if (affiliateFor(state.boatCode)) {
+      /* live funnel: hand the visitor to the partner's own booking page */
+      html += '<button type="button" id="alf-affiliate" class="btn-solid"' + (guests() < 1 ? " disabled" : "") + ">Check availability on " +
+        esc(partnerName(state.boatCode)) + " " + icon("arrow-up-right", 16) + "</button>";
     } else {
       var q = quote();
       var label = state.pending
@@ -525,9 +572,16 @@
     var back = document.getElementById("alf-back");
     var next = document.getElementById("alf-next");
     var confirm = document.getElementById("alf-confirm");
+    var affiliateBtn = document.getElementById("alf-affiliate");
     if (back) back.addEventListener("click", function () { go(state.step - 1); });
     if (next) next.addEventListener("click", function () { if (canContinue()) go(state.step + 1); });
     if (confirm) confirm.addEventListener("click", submit);
+    if (affiliateBtn) {
+      affiliateBtn.addEventListener("click", function () {
+        var aff = affiliateFor(state.boatCode);
+        if (aff) window.open(affiliateUrl(aff), "_blank", "noopener");
+      });
+    }
   }
 
   function submit() {
