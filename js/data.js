@@ -200,14 +200,14 @@ window.ALF_DATA = {
     "tone": "mint",
     "affiliate": {
      "provider": "viator",
-     "url": "https://www.getyourguide.com/en-gb/amsterdam-l36/amsterdam-light-festival-boat-with-unlimited-drinks-snack-t501688/",
+     "url": "https://www.getyourguide.com/en-gb/amsterdam-l36/amsterdam-light-festival-boat-with-unlimited-drinks-snack-t501688/?partner_id=KRAI3FK",
      "categoryUrl": "",
      "fallbackUrl": "",
      "options": [
       {
        "provider": "getyourguide",
        "title": "Amsterdam: Light Festival Boat with Unlimited Drinks & Snack",
-       "url": "https://www.getyourguide.com/en-gb/amsterdam-l36/amsterdam-light-festival-boat-with-unlimited-drinks-snack-t501688/",
+       "url": "https://www.getyourguide.com/en-gb/amsterdam-l36/amsterdam-light-festival-boat-with-unlimited-drinks-snack-t501688/?partner_id=KRAI3FK",
        "priceFrom": 2600,
        "durationMinutes": 75,
        "rating": 4.4,
@@ -316,7 +316,7 @@ window.ALF_DATA = {
       {
        "provider": "getyourguide",
        "title": "Amsterdam: Light Festival Cruise with Live Guide",
-       "url": "https://www.getyourguide.com/en-gb/amsterdam-l36/amsterdam-light-festival-cruise-with-optional-wine-snacks-t507500/",
+       "url": "https://www.getyourguide.com/en-gb/amsterdam-l36/amsterdam-light-festival-cruise-with-optional-wine-snacks-t507500/?partner_id=KRAI3FK",
        "priceFrom": null,
        "durationMinutes": 90,
        "rating": 3.3,
@@ -383,14 +383,14 @@ window.ALF_DATA = {
     "tone": "magenta",
     "affiliate": {
      "provider": "viator",
-     "url": "https://www.getyourguide.com/en-gb/amsterdam-l36/luxury-amsterdam-light-festival-cruise-live-commentary-t501088/",
+     "url": "https://www.getyourguide.com/en-gb/amsterdam-l36/luxury-amsterdam-light-festival-cruise-live-commentary-t501088/?partner_id=KRAI3FK",
      "categoryUrl": "",
      "fallbackUrl": "",
      "options": [
       {
        "provider": "getyourguide",
        "title": "Luxury Amsterdam Light Festival Cruise with Captain Guide, Drinks",
-       "url": "https://www.getyourguide.com/en-gb/amsterdam-l36/luxury-amsterdam-light-festival-cruise-live-commentary-t501088/",
+       "url": "https://www.getyourguide.com/en-gb/amsterdam-l36/luxury-amsterdam-light-festival-cruise-live-commentary-t501088/?partner_id=KRAI3FK",
        "priceFrom": null,
        "durationMinutes": 90,
        "rating": 4.1,
