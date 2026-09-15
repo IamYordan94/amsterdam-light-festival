@@ -199,11 +199,72 @@ window.ALF_DATA = {
     "image": "/images/boat-spheres.jpg",
     "tone": "mint",
     "affiliate": {
-     "provider": "",
-     "url": "",
+     "provider": "viator",
+     "url": "https://www.getyourguide.com/en-gb/amsterdam-l36/amsterdam-light-festival-boat-with-unlimited-drinks-snack-t501688/",
      "categoryUrl": "",
      "fallbackUrl": "",
-     "options": []
+     "options": [
+      {
+       "provider": "getyourguide",
+       "title": "Amsterdam: Light Festival Boat with Unlimited Drinks & Snack",
+       "url": "https://www.getyourguide.com/en-gb/amsterdam-l36/amsterdam-light-festival-boat-with-unlimited-drinks-snack-t501688/",
+       "priceFrom": 2600,
+       "durationMinutes": 75,
+       "rating": 4.4,
+       "reviews": 4014,
+       "note": "Electric open boat · glühwein, hot chocolate and a welcome snack (Starboard Boats)",
+       "times": [],
+       "days": [],
+       "timesStatus": "widget"
+      },
+      {
+       "provider": "viator",
+       "title": "Amsterdam Canal Cruise in Open Boat with Unlimited Drinks Option",
+       "url": "https://www.viator.com/en-GB/tours/Amsterdam/Amsterdam-Canal-Cruise-60-minutes/d525-21949P15?mcid=42383&pid=P00296752&medium=api&api_version=2.0",
+       "priceFrom": 2950,
+       "durationMinutes": null,
+       "rating": 4.92,
+       "reviews": 5848,
+       "note": "Open boat with unlimited drinks",
+       "times": [
+        "16:00",
+        "16:15",
+        "16:30",
+        "16:45",
+        "17:00",
+        "17:15",
+        "17:30",
+        "17:45",
+        "18:00",
+        "18:15",
+        "18:30",
+        "18:45",
+        "19:00",
+        "19:15",
+        "19:30",
+        "19:45",
+        "20:00",
+        "20:15",
+        "20:30",
+        "20:45",
+        "21:00",
+        "21:15",
+        "21:30",
+        "21:45",
+        "22:00"
+       ],
+       "days": [
+        "Fri",
+        "Mon",
+        "Sat",
+        "Sun",
+        "Thu",
+        "Tue",
+        "Wed"
+       ],
+       "timesStatus": "typical"
+      }
+     ]
     }
    },
    {
@@ -220,11 +281,91 @@ window.ALF_DATA = {
     "image": "/images/cruise-arch.jpg",
     "tone": "sky",
     "affiliate": {
-     "provider": "",
-     "url": "",
+     "provider": "viator",
+     "url": "https://www.viator.com/en-GB/tours/Amsterdam/Amsterdam-Light-Festival-Canal-Cruise/d525-91551P4?mcid=42383&pid=P00296752&medium=api&api_version=2.0",
      "categoryUrl": "",
      "fallbackUrl": "",
-     "options": []
+     "options": [
+      {
+       "provider": "viator",
+       "title": "Amsterdam Light Festival Cruise by Captain Dave",
+       "url": "https://www.viator.com/en-GB/tours/Amsterdam/Amsterdam-Light-Festival-Canal-Cruise/d525-91551P4?mcid=42383&pid=P00296752&medium=api&api_version=2.0",
+       "priceFrom": 5200,
+       "durationMinutes": null,
+       "rating": 4.89,
+       "reviews": 123,
+       "note": "Light Festival cruise with the captain as your guide",
+       "times": [
+        "16:30",
+        "17:00",
+        "18:30",
+        "19:00",
+        "20:30"
+       ],
+       "days": [
+        "Fri",
+        "Mon",
+        "Sat",
+        "Sun",
+        "Thu",
+        "Tue",
+        "Wed"
+       ],
+       "timesStatus": "live"
+      },
+      {
+       "provider": "getyourguide",
+       "title": "Amsterdam: Light Festival Cruise with Live Guide",
+       "url": "https://www.getyourguide.com/en-gb/amsterdam-l36/amsterdam-light-festival-cruise-with-optional-wine-snacks-t507500/",
+       "priceFrom": null,
+       "durationMinutes": 90,
+       "rating": 3.3,
+       "reviews": 35,
+       "note": "Heated, covered boat · 20 artworks · commentary EN/NL/DE (Blue Boat Company)",
+       "times": [],
+       "days": [],
+       "timesStatus": "widget"
+      },
+      {
+       "provider": "viator",
+       "title": "Amsterdam: Luxury Canal Cruise including Cocktails & Snacks",
+       "url": "https://www.viator.com/en-GB/tours/Amsterdam/Amsterdam-Open-Boat-Canal-Cruise/d525-23507P1?mcid=42383&pid=P00296752&medium=api&api_version=2.0",
+       "priceFrom": 2995,
+       "durationMinutes": null,
+       "rating": 4.91,
+       "reviews": 6747,
+       "note": "Evening cruise with cocktails and snacks",
+       "times": [
+        "16:00",
+        "16:20",
+        "16:40",
+        "17:00",
+        "17:20",
+        "17:40",
+        "18:00",
+        "18:20",
+        "18:40",
+        "19:00",
+        "19:20",
+        "19:40",
+        "20:00",
+        "20:30",
+        "21:00",
+        "21:30",
+        "22:00"
+       ],
+       "days": [
+        "Fri",
+        "Mon",
+        "Sat",
+        "Sun",
+        "Thu",
+        "Tue",
+        "Wed"
+       ],
+       "timesStatus": "live"
+      }
+     ]
     }
    },
    {
@@ -241,11 +382,67 @@ window.ALF_DATA = {
     "image": "/images/tower-boat.jpg",
     "tone": "magenta",
     "affiliate": {
-     "provider": "",
-     "url": "",
+     "provider": "viator",
+     "url": "https://www.getyourguide.com/en-gb/amsterdam-l36/luxury-amsterdam-light-festival-cruise-live-commentary-t501088/",
      "categoryUrl": "",
      "fallbackUrl": "",
-     "options": []
+     "options": [
+      {
+       "provider": "getyourguide",
+       "title": "Luxury Amsterdam Light Festival Cruise with Captain Guide, Drinks",
+       "url": "https://www.getyourguide.com/en-gb/amsterdam-l36/luxury-amsterdam-light-festival-cruise-live-commentary-t501088/",
+       "priceFrom": null,
+       "durationMinutes": 90,
+       "rating": 4.1,
+       "reviews": 523,
+       "note": "Live commentary from the captain · drinks on board (HopOn HopOff Holland)",
+       "times": [],
+       "days": [],
+       "timesStatus": "widget"
+      },
+      {
+       "provider": "viator",
+       "title": "Amsterdam Classic Saloon Boat Cruise with Drinks and Cheese",
+       "url": "https://www.viator.com/en-GB/tours/Amsterdam/Amsterdam-Canal-Cruise/d525-75227P6?mcid=42383&pid=P00296752&medium=api&api_version=2.0",
+       "priceFrom": 1699,
+       "durationMinutes": null,
+       "rating": 4.85,
+       "reviews": 33443,
+       "note": "Classic saloon boat with drinks and cheese",
+       "times": [
+        "16:00",
+        "16:15",
+        "16:30",
+        "17:00",
+        "17:15",
+        "17:30",
+        "18:00",
+        "18:15",
+        "18:30",
+        "19:00",
+        "19:15",
+        "19:30",
+        "20:00",
+        "20:15",
+        "20:30",
+        "21:00",
+        "21:15",
+        "21:30",
+        "22:00",
+        "22:15"
+       ],
+       "days": [
+        "Fri",
+        "Mon",
+        "Sat",
+        "Sun",
+        "Thu",
+        "Tue",
+        "Wed"
+       ],
+       "timesStatus": "live"
+      }
+     ]
     }
    }
   ],

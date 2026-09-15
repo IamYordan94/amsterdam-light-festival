@@ -288,22 +288,43 @@
   function renderBoat() {
     var cards = boats.map(function (b) {
       var selected = state.boatCode === b.code;
+      var aff = affiliateFor(b.code);
+      var opts = aff ? (aff.options || []) : [];
+      /* in partner mode the card describes the category and its real offers, not our
+         invented boat/price list */
+      var prices = opts.map(function (o) { return o.priceFrom; }).filter(Boolean);
+      var cheapest = prices.length ? Math.min.apply(null, prices) : null;
+      var durations = opts.map(function (o) { return o.durationMinutes; }).filter(Boolean);
+      var title = aff ? b.kind : b.name;
+      var blurb = aff
+        ? (opts.length ? opts.length + " real " + (opts.length === 1 ? "cruise" : "cruises") + " in this category, with live prices and departure times" : "No offers configured yet")
+        : b.description;
+      var priceLine = aff
+        ? (cheapest ? '<span class="font-display text-3xl text-paper">from ' + money(cheapest) + "</span>" +
+            '<span class="text-xs uppercase tracking-[0.16em] text-paper/50">per person, all operators</span>'
+          : '<span class="text-xs uppercase tracking-[0.16em] text-paper/50">prices on the booking page</span>')
+        : '<span class="font-display text-3xl text-paper">' + money(b.adultPrice) + "</span>" +
+          '<span class="text-xs uppercase tracking-[0.16em] text-paper/50">adult · ' + money(b.childPrice) + " child</span>";
       return '<button type="button" data-boat="' + b.code + '" class="flex w-full flex-col border-2 text-left transition-colors ' +
         (selected ? "border-mint bg-mint/10" : "border-paper/20 hover:border-paper") + '">' +
         '<div class="duotone ' + toneClass(b.tone) + ' aspect-16/9 w-full">' +
-        '<img src="' + b.image.replace(/^\//, "") + '" alt="' + esc(b.name) + '" loading="lazy"><div class="duotone-floor"></div></div>' +
+        '<img src="' + b.image.replace(/^\//, "") + '" alt="' + esc(title) + '" loading="lazy"><div class="duotone-floor"></div></div>' +
         '<div class="flex flex-1 flex-col p-5">' +
-        '<span class="label-xs text-mint">' + esc(b.kind) + "</span>" +
-        '<p class="headline mt-2 text-xl md:text-2xl">' + esc(b.name) + "</p>" +
-        '<p class="mt-3 text-sm leading-relaxed text-paper/65">' + esc(b.description) + "</p>" +
+        '<span class="label-xs text-mint">' + esc(aff ? "Choose this category" : b.kind) + "</span>" +
+        '<p class="headline mt-2 text-xl md:text-2xl">' + esc(title) + "</p>" +
+        '<p class="mt-3 text-sm leading-relaxed text-paper/65">' + esc(blurb) + "</p>" +
         '<div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs uppercase tracking-[0.14em] text-paper/55">' +
-        '<span class="flex items-center gap-2">' + icon("clock", 14, "text-magenta") + " " + b.durationMinutes + " min</span>" +
-        '<span class="flex items-center gap-2">' + icon("users", 14, "text-magenta") + " " + b.capacity + " seats</span>" +
+        (durations.length
+          ? '<span class="flex items-center gap-2">' + icon("clock", 14, "text-magenta") + " " +
+            (Math.min.apply(null, durations) === Math.max.apply(null, durations)
+              ? Math.min.apply(null, durations) + " min"
+              : Math.min.apply(null, durations) + "–" + Math.max.apply(null, durations) + " min") + "</span>"
+          : '<span class="flex items-center gap-2">' + icon("clock", 14, "text-magenta") + " " + b.durationMinutes + " min</span>") +
+        (aff ? "" : '<span class="flex items-center gap-2">' + icon("users", 14, "text-magenta") + " " + b.capacity + " seats</span>") +
+        (aff && opts.length ? '<span class="flex items-center gap-2">' + opts.length + (opts.length === 1 ? " cruise" : " cruises") + "</span>" : "") +
         "</div>" +
-        '<div class="mt-5 flex items-baseline gap-3 border-t border-paper/15 pt-4">' +
-        '<span class="font-display text-3xl text-paper">' + money(b.adultPrice) + "</span>" +
-        '<span class="text-xs uppercase tracking-[0.16em] text-paper/50">adult · ' + money(b.childPrice) + " child</span>" +
-        "</div></div></button>";
+        '<div class="mt-5 flex items-baseline gap-3 border-t border-paper/15 pt-4">' + priceLine + "</div>" +
+        "</div></button>";
     }).join("");
 
     stepHost.innerHTML = "<div>" + stepHead("02", "Choose a boat") +
@@ -491,11 +512,33 @@
   }
 
   /* ------------------------------------------------- offers (partner mode only) */
+  function departureLine(o) {
+    var t = o.times || [];
+    var days = o.days || [];
+    var dayText = days.length >= 7 ? "Nightly" : (days.length ? days.join(", ") : "");
+    if (!t.length) {
+      return o.provider === "getyourguide" ? "Live times and prices appear on the booking page" : "";
+    }
+    if (o.timesStatus === "typical") {
+      return (dayText ? dayText + " · " : "") + "typical evening departures " + t[0] + "–" + t[t.length - 1] + " — confirmed on the booking page";
+    }
+    if (t.length <= 8) return (dayText ? dayText + " · " : "") + "departs " + t.join(" · ");
+    var gaps = [];
+    for (var i = 1; i < t.length; i++) {
+      var a = t[i - 1].split(":"), b = t[i].split(":");
+      gaps.push((Number(b[0]) * 60 + Number(b[1])) - (Number(a[0]) * 60 + Number(a[1])));
+    }
+    gaps.sort(function (x, y) { return x - y; });
+    var step = gaps[Math.floor(gaps.length / 2)] || 20;
+    return (dayText ? dayText + " · " : "") + "departures " + t[0] + "–" + t[t.length - 1] + ", every " + step + " min";
+  }
+
   function renderOffers(b) {
     var aff = affiliateFor(b.code);
     var opts = aff.options || [];
     var cards = opts.map(function (o, i) {
       var selected = state.optionIndex === i;
+      var dep = departureLine(o);
       return '<button type="button" data-option="' + i + '" class="flex w-full items-start gap-4 border-2 p-5 text-left transition-colors ' +
         (selected ? "border-mint bg-mint/10" : "border-paper/20 hover:border-paper") + '">' +
         '<span class="mt-1 flex h-5 w-5 shrink-0 items-center justify-center border-2 ' +
@@ -507,7 +550,9 @@
         '<span class="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs uppercase tracking-[0.14em] text-paper/55">' +
         (o.durationMinutes ? '<span class="flex items-center gap-2">' + icon("clock", 13, "text-magenta") + " " + o.durationMinutes + " min</span>" : "") +
         (o.reviews ? "<span>" + esc(String(o.rating || "")) + " ★ · " + esc(String(o.reviews)) + " reviews</span>" : "") +
-        "</span></span>" +
+        "</span>" +
+        (dep ? '<span class="mt-3 flex items-start gap-2 text-xs leading-relaxed text-mint">' + icon("clock", 13, "mt-0.5 shrink-0") + "<span>" + esc(dep) + "</span></span>" : "") +
+        "</span>" +
         '<span class="shrink-0 text-right"><span class="font-display text-2xl">' +
         (o.priceFrom ? "from " + money(o.priceFrom) : "") + "</span></span></button>";
     }).join("");
@@ -555,10 +600,14 @@
     var guestText = state.adults + " adult" + (state.adults === 1 ? "" : "s");
     if (state.children > 0) guestText += ", " + state.children + " child" + (state.children === 1 ? "" : "ren");
 
+    var boatValue = "—";
+    if (b) {
+      var mins = affNow ? (optNow && optNow.durationMinutes) : b.durationMinutes;
+      boatValue = b.kind + (mins ? " · " + mins + " min" : "");
+    }
+
     var rows = summaryRow("Date & time", dateTime) +
-      summaryRow("Boat", b
-        ? b.kind + " · " + ((affNow && optNow && optNow.durationMinutes) ? optNow.durationMinutes : b.durationMinutes) + " min"
-        : "—") +
+      summaryRow("Boat", boatValue) +
       /* in partner mode the dock is chosen on the partner's page, so never invent one */
       (affNow ? "" : summaryRow("Departure dock", d ? d.name : "—")) +
       summaryRow("Guests", guestText) +
