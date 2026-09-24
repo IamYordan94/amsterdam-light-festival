@@ -108,3 +108,48 @@ python3 build_programme.py     # home programme section
 # publish to yordaan.com (Cloudflare Pages watches the repo)
 cd _yordaan && cp -r ../site/* . && git add -A && git commit -m "…" && git push
 ```
+
+---
+
+## 6. MOBILE — CHECKED, AND THREE REAL FAULTS FIXED (24 Sep 2026)
+
+Every page was measured at **390px, 360px and 320px** wide (a normal iPhone, an older Android, a
+small Android) and the booking flow was walked by *tapping* it: date → boat → cruise → guests →
+hand-off. Three genuine faults turned up — none of them visible on a desktop screen:
+
+1. **The contact email widened the page.** `hello@amsterdamlightfestival.test` is 33 characters with
+   no spaces; at 320px it pushed the document 12px past the edge. Emails, phone numbers and headings
+   can now break.
+2. **The artwork chip row could not wrap.** Stop number + "Keizersgracht" + "On the canal wall" in one
+   unbreakable row made the artworks page 17px too wide at 320px.
+3. **The booking rails stretched the page.** The offer rails are horizontal scrollers, but a grid
+   column defaults to `min-width:auto`, so the column was sized by the rail's whole track: step 2 ran
+   **376px** too wide and step 3 **196px** too wide at 390px. The columns now shrink and the rail
+   scrolls inside them.
+
+Also: footer links and the contact details got a thumb-sized tap area, and the embedded widget was
+loading lazily — on a phone it sits below the fold, so visitors would have seen an empty white frame;
+it now loads with the step.
+
+**Verified live:** all four pages and all three wizard steps fit 320/360/390px with zero overflow,
+the programme index scrolls and taps select a work, the rails swipe, and the GetYourGuide module
+renders on a phone (photo, tour name, rating, price, dates, traveller selector).
+
+## 7. BOOKING SYSTEMS — WHAT IS POSSIBLE, AND WHAT WE USE
+
+Our wizard is a **chooser**; the sale completes on the partner's site. That is not a shortcut — it is
+what "affiliate" requires. Viator's own terms: *"sales of Viator products must be carried out on the
+Viator site itself"*; only merchant partners, a separate agreement, may sell in their own name.
+
+| Option | What it gives | What it needs | Verdict |
+|---|---|---|---|
+| Deep links + our chooser | hands a visitor over with our tag in the URL | nothing | works, but invisible |
+| **Platform widgets** (live price + dates + their button, inside our page) | a real bookable module on our page, still tracked to our id | a partner account — we have one (`KRAI3FK`) | **live now** in step 3 |
+| GetYourGuide API / Viator merchant | their real availability data; on GYG's Masterbill tier, bookings in our name | GYG: **100,000 visits/month** for basic, **1M + 300 bookings/month** for availability, Masterbill by contract + deposit | milestone, not a task |
+| **FareHarbor Distribution Network** | links/widgets/QR for operators on FareHarbor at **15% commission** (vs ~8%) | the operator must be in the network and accept us; one affiliate agreement | **best next step** — Amsterdam Light Festival operators (Starboard Boats, Friendship Amsterdam) run on FareHarbor |
+| Our own checkout (Stripe + operator contracts) | we take the money and set the margin | KVK, a contract per operator, refund liability, customer service | not before real traffic and a company |
+
+The GetYourGuide availability widget is embedded per selected cruise and shows a visitor a real price
+and a real date without leaving the page — it is also what fills the two offers that used to read
+"price on the page". Viator offers say plainly that Viator completes the booking, because their terms
+do not allow a price module to be embedded.
