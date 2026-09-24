@@ -285,6 +285,39 @@
     });
   }
 
+  /* --------------------------------------------------- slideable partner rails */
+  var CHEV_L = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>';
+  var CHEV_R = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>';
+
+  /* one rail: arrows, a hint, and the slides. Nothing moves on its own - the visitor
+     slides, drags, scrolls or uses the arrow keys. */
+  function railBlock(id, slides, hint) {
+    return '<div class="mt-7 flex flex-wrap items-center justify-between gap-3">' +
+      '<p class="text-[11px] uppercase tracking-[0.16em] text-paper/40">' + (hint || "Slide through the offers") + "</p>" +
+      '<div class="flex gap-2">' +
+      '<button type="button" data-rail="prev" aria-label="Slide back" class="rail-arrow">' + CHEV_L + "</button>" +
+      '<button type="button" data-rail="next" aria-label="Slide forward" class="rail-arrow">' + CHEV_R + "</button>" +
+      "</div></div>" +
+      '<div class="offer-rail mt-4" id="' + id + '" tabindex="0" role="group" aria-label="Offers">' + slides + "</div>";
+  }
+
+  function wireRail(host, id) {
+    var rail = host.querySelector("#" + id);
+    if (!rail) return;
+    host.querySelectorAll("[data-rail]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var first = rail.querySelector(":scope > *");
+        var step = first ? first.getBoundingClientRect().width + 16 : rail.clientWidth * 0.8;
+        rail.scrollBy({ left: btn.getAttribute("data-rail") === "next" ? step : -step, behavior: "smooth" });
+      });
+    });
+    rail.addEventListener("keydown", function (e) {
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      e.preventDefault();
+      rail.scrollBy({ left: (e.key === "ArrowRight" ? 1 : -1) * rail.clientWidth * 0.8, behavior: "smooth" });
+    });
+  }
+
   function renderBoat() {
     var cards = boats.map(function (b) {
       var selected = state.boatCode === b.code;
@@ -305,7 +338,7 @@
           : '<span class="text-xs uppercase tracking-[0.16em] text-paper/50">prices on the booking page</span>')
         : '<span class="font-display text-3xl text-paper">' + money(b.adultPrice) + "</span>" +
           '<span class="text-xs uppercase tracking-[0.16em] text-paper/50">adult · ' + money(b.childPrice) + " child</span>";
-      return '<button type="button" data-boat="' + b.code + '" class="flex w-full flex-col border-2 text-left transition-colors ' +
+      return '<button type="button" data-boat="' + b.code + '" class="offer-slide flex flex-col border-2 text-left transition-colors ' +
         (selected ? "border-mint bg-mint/10" : "border-paper/20 hover:border-paper") + '">' +
         '<div class="duotone ' + toneClass(b.tone) + ' aspect-16/9 w-full">' +
         '<img src="' + b.image.replace(/^\//, "") + '" alt="' + esc(title) + '" loading="lazy"><div class="duotone-floor"></div></div>' +
@@ -329,7 +362,9 @@
 
     stepHost.innerHTML = "<div>" + stepHead("02", "Choose a boat") +
       '<p class="mt-4 max-w-xl text-paper/65">Same artworks, different way of seeing them. Prices are per person.</p>' +
-      '<div class="mt-8 grid gap-4 md:grid-cols-3">' + cards + "</div></div>";
+      railBlock("boat-rail", cards) + "</div>";
+
+    wireRail(stepHost, "boat-rail");
 
     stepHost.querySelectorAll("button[data-boat]").forEach(function (btn) {
       btn.addEventListener("click", function () {
@@ -539,12 +574,15 @@
     var cards = opts.map(function (o, i) {
       var selected = state.optionIndex === i;
       var dep = departureLine(o);
-      return '<button type="button" data-option="' + i + '" class="flex w-full items-start gap-4 border-2 p-5 text-left transition-colors ' +
+      var partner = PARTNER_NAMES[o.provider] || o.provider || "the operator";
+      var bookUrl = o.url || aff.categoryUrl || "";
+      return '<div class="offer-slide flex flex-col border-2 transition-colors ' +
         (selected ? "border-mint bg-mint/10" : "border-paper/20 hover:border-paper") + '">' +
+        '<button type="button" data-option="' + i + '" class="flex flex-1 items-start gap-4 p-5 text-left">' +
         '<span class="mt-1 flex h-5 w-5 shrink-0 items-center justify-center border-2 ' +
         (selected ? "border-mint bg-mint text-night" : "border-paper/40") + '">' + (selected ? icon("check", 13) : "") + "</span>" +
         '<span class="flex-1">' +
-        '<span class="label-xs ' + (o.provider === "viator" ? "text-magenta" : "text-mint") + '">' + esc(PARTNER_NAMES[o.provider] || o.provider || "partner") + "</span>" +
+        '<span class="label-xs ' + (o.provider === "viator" ? "text-magenta" : "text-mint") + '">' + esc(partner) + "</span>" +
         '<span class="headline mt-2 block text-lg">' + esc(o.title || "") + "</span>" +
         (o.note ? '<span class="mt-1 block text-sm text-paper/65">' + esc(o.note) + "</span>" : "") +
         '<span class="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs uppercase tracking-[0.14em] text-paper/55">' +
@@ -552,9 +590,14 @@
         (o.reviews ? "<span>" + esc(String(o.rating || "")) + " ★ · " + esc(String(o.reviews)) + " reviews</span>" : "") +
         "</span>" +
         (dep ? '<span class="mt-3 flex items-start gap-2 text-xs leading-relaxed text-mint">' + icon("clock", 13, "mt-0.5 shrink-0") + "<span>" + esc(dep) + "</span></span>" : "") +
-        "</span>" +
-        '<span class="shrink-0 text-right"><span class="font-display text-2xl">' +
-        (o.priceFrom ? "from " + money(o.priceFrom) : "") + "</span></span></button>";
+        "</span></button>" +
+        /* straight through to the partner: one click, no wizard needed */
+        '<div class="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-paper/15 px-5 py-4">' +
+        '<span class="font-display text-xl">' + (o.priceFrom ? "from " + money(o.priceFrom) : "price on the page") + "</span>" +
+        (bookUrl
+          ? '<a href="' + esc(bookUrl) + '" target="_blank" rel="noopener sponsored" class="label-xs flex items-center gap-2 border-2 border-mint px-4 py-3 text-mint transition-colors hover:bg-mint hover:text-night">Book on ' + esc(partner) + " " + icon("arrow-up-right", 12) + "</a>"
+          : "") +
+        "</div></div>";
     }).join("");
 
     var allLink = aff.categoryUrl
@@ -564,11 +607,14 @@
     stepHost.innerHTML = "<div>" + stepHead("03", "Choose your cruise") +
       '<p class="mt-4 max-w-xl text-paper/65">' + esc(dateLabel(state.date)) + " — " + esc(b.kind) +
       ". These are the operators currently offering this kind of boat. Prices and times are theirs, checked on the booking page.</p>" +
-      '<div class="mt-8 grid gap-3">' +
-      (cards || '<p class="border-2 border-paper/20 p-5 text-sm text-paper/60">No offers configured for this category yet.</p>') +
-      "</div>" + allLink +
+      (cards
+        ? railBlock("offer-rail", cards, "Slide through the offers — or book straight away")
+        : '<p class="mt-8 border-2 border-paper/20 p-5 text-sm text-paper/60">No offers configured for this category yet.</p>') +
+      allLink +
       '<p class="mt-6 text-xs leading-relaxed text-paper/45">Every booking is completed on the operator\'s or the platform\'s own page. We may earn a commission — it never changes the price you pay.</p>' +
       "</div>";
+
+    if (cards) wireRail(stepHost, "offer-rail");
 
     stepHost.querySelectorAll("button[data-option]").forEach(function (btn) {
       btn.addEventListener("click", function () {

@@ -266,3 +266,32 @@ html:not(.js) .reveal,
 .pg-fallback a { color: var(--color-paper); }
 .pg-fallback .pg-fallback-name { font-weight: 700; text-transform: uppercase; }
 .pg-fallback .pg-fallback-meta { color: rgba(255, 255, 255, 0.55); font-size: 0.8rem; }
+
+/* --------------- slideable offer rails (tickets wizard, partner offers) --------------- */
+.offer-rail {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding-bottom: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.25) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+.offer-rail::-webkit-scrollbar { height: 6px; }
+.offer-rail::-webkit-scrollbar-thumb { background: rgba(255,255,255,.22); }
+.offer-rail:focus-visible { outline: 2px solid var(--color-mint); outline-offset: 4px; }
+.offer-slide { flex: 0 0 auto; width: min(88%, 30rem); scroll-snap-align: start; }
+@media (min-width: 768px) { .offer-slide { width: min(58%, 32rem); } }
+@media (min-width: 1280px) { .offer-slide { width: min(40%, 32rem); } }
+.rail-arrow {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.5rem; height: 2.5rem;
+  border: 1px solid rgba(255,255,255,.28);
+  color: var(--color-paper, #fff);
+  transition: background .18s ease, color .18s ease, border-color .18s ease;
+}
+.rail-arrow:hover { background: var(--color-paper, #fff); color: var(--color-night, #080c20); border-color: var(--color-paper, #fff); }
+@media (prefers-reduced-motion: reduce) { .offer-rail { scroll-behavior: auto; } }

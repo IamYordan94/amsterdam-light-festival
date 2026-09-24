@@ -171,7 +171,7 @@
         riseOnHover: true
       }).addTo(map).bindPopup(
         '<span class="alf-pop-kicker">Stop ' + pad2(a.stop) + "</span><strong>" + esc(a.title) +
-        '</strong><span class="alf-pop-meta">' + esc(a.artist) + " — " + esc(a.country) +
+        '</strong><span class="alf-pop-meta">' + esc(a.kind || "") +
         '</span><span class="alf-pop-meta">' + esc(a.location) + "</span>"
       );
       m.on("click", function () { select(a.stop); });

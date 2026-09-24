@@ -35,7 +35,7 @@
         '<span class="pg-num">' + pad(w.stop) + '</span>' +
         '<span class="pg-text">' +
           '<span class="pg-name">' + esc(w.title) + '</span>' +
-          '<span class="pg-who">' + esc(w.artist) + ' — ' + esc(w.country) + '</span>' +
+          '<span class="pg-who">' + esc(w.kind || "") + '</span>' +
         '</span>' +
         '<span class="pg-area">' + esc(w.area) + '</span>' +
       '</button></li>';
@@ -46,7 +46,7 @@
     // both layers eager: the second one becomes visible mid-crossfade, and a lazy image
     // there stalls exactly when the visitor is waiting for it
     return '<div class="pg-frame duotone bg-' + esc(w.tone) + (i === 0 ? " is-on" : "") + '" data-layer="' + i + '">' +
-      '<img src="' + esc(w.image.replace(/^\//, "")) + '" alt="' + esc(w.title) + ' — ' + esc(w.artist) + '" loading="eager" decoding="async">' +
+      '<img src="' + esc(w.image.replace(/^\//, "")) + '" alt="' + esc(w.title) + ' — ' + esc(w.kind || "") + '" loading="eager" decoding="async">' +
       '<div class="duotone-floor"></div></div>';
   }
 
@@ -71,8 +71,8 @@
         '</div>' +
       '</div>' +
       '<div class="pg-index-wrap">' +
-        '<p class="pg-index-label">The twelve works</p>' +
-        '<ol class="pg-index" role="tablist" aria-label="All twelve works" aria-orientation="vertical">' + rows + '</ol>' +
+        '<p class="pg-index-label">All ' + total + ' works</p>' +
+        '<ol class="pg-index" role="tablist" aria-label="All ' + total + ' works" aria-orientation="vertical">' + rows + '</ol>' +
       '</div>' +
     '</div>';
 
@@ -107,7 +107,7 @@
       var img = incoming.querySelector("img");
       img.loading = "eager";
       img.src = w.image.replace(/^\//, "");
-      img.alt = w.title + " — " + w.artist;
+      img.alt = w.title + " — " + (w.kind || "");
 
       frames[front].classList.remove("is-on");
       incoming.classList.add("is-on");
@@ -121,7 +121,7 @@
       tabs[n].tabIndex = n === i ? 0 : -1;
     });
     elTitle.textContent = w.title;
-    elSub.textContent = w.artist + " — " + w.country + " · " + w.area;
+    elSub.textContent = (w.kind || "") + " · " + w.area;
     elDesc.textContent = w.description;
     elCount.textContent = pad(w.stop);
     elLink.href = "artworks.html#stop-" + w.stop;
