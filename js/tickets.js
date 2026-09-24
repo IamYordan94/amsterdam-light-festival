@@ -570,9 +570,48 @@
     return (dayText ? dayText + " · " : "") + "departures " + t[0] + "–" + t[t.length - 1] + ", every " + step + " min";
   }
 
+  /* ---- live availability, embedded from GetYourGuide -------------------------
+     This is the affiliate module that is actually visible to a visitor: the widget
+     renders the tour's real price, real dates and a real booking button, and every
+     link inside it carries our partner id (KRAI3FK). Viator has no equivalent
+     embeddable widget, so Viator offers keep the plain hand-off button instead. */
+  var GYG_WIDGET = "https://widget.getyourguide.com/default/availability.frame";
+  function gygTourId(url) {
+    var m = String(url || "").match(/-t(\d{4,})/);
+    return m ? m[1] : "";
+  }
+  function liveAvailability(o) {
+    if (!o) return "";
+    if (o.provider === "getyourguide") {
+      var id = gygTourId(o.url);
+      if (!id) return "";
+      var src = GYG_WIDGET + "?partner_id=KRAI3FK&locale=en-GB&currency=EUR&tour_id=" + id;
+      return '<div class="live-avail mt-7 border-2 border-mint/40 bg-[#0c1238] p-5 md:p-6">' +
+        '<div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">' +
+        '<p class="label-xs text-mint">Live availability — GetYourGuide</p>' +
+        '<p class="text-xs text-paper/45">Prices and dates come from their booking system, not from this page</p></div>' +
+        '<div class="mt-5 border-2 border-paper/15 bg-white">' +
+        '<iframe src="' + esc(src) + '" title="Live prices and dates from GetYourGuide" loading="lazy" ' +
+        'referrerpolicy="no-referrer-when-downgrade" style="width:100%;height:352px;border:0;display:block"></iframe>' +
+        "</div>" +
+        '<p class="mt-4 text-xs leading-relaxed text-paper/45">Booked and paid on GetYourGuide through our partner link — the price is the same as going to them directly.</p>' +
+        "</div>";
+    }
+    if (o.provider === "viator") {
+      return '<div class="mt-7 border-2 border-paper/20 bg-[#0c1238] p-5 md:p-6">' +
+        '<p class="label-xs text-magenta">Viator</p>' +
+        '<p class="mt-3 text-sm leading-relaxed text-paper/65">Viator takes the booking on their own site — use the button on the card above. ' +
+        "Their commission policy does not allow a price or availability module to be embedded here.</p></div>";
+    }
+    return "";
+  }
+
   function renderOffers(b) {
     var aff = affiliateFor(b.code);
     var opts = aff.options || [];
+    /* The first offer is pre-selected: the live-availability panel below the rail should
+       show something real the moment a visitor arrives on this step, not an empty gap. */
+    if (opts.length && (state.optionIndex === null || !opts[state.optionIndex])) state.optionIndex = 0;
     var cards = opts.map(function (o, i) {
       var selected = state.optionIndex === i;
       var dep = departureLine(o);
@@ -612,6 +651,7 @@
       (cards
         ? railBlock("offer-rail", cards, "Slide through the offers — or book straight away")
         : '<p class="mt-8 border-2 border-paper/20 p-5 text-sm text-paper/60">No offers configured for this category yet.</p>') +
+      liveAvailability(opts[state.optionIndex]) +
       allLink +
       '<p class="mt-6 text-xs leading-relaxed text-paper/45">Every booking is completed on the operator\'s or the platform\'s own page. We may earn a commission — it never changes the price you pay.</p>' +
       "</div>";

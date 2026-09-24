@@ -295,3 +295,35 @@ html:not(.js) .reveal,
 }
 .rail-arrow:hover { background: var(--color-paper, #fff); color: var(--color-night, #080c20); border-color: var(--color-paper, #fff); }
 @media (prefers-reduced-motion: reduce) { .offer-rail { scroll-behavior: auto; } }
+
+/* --------- long unbreakable strings must never widen the page on small phones ---------
+   The contact email is 33 characters; at text-lg inside a 320px viewport it pushed the
+   document 12px past the edge. Anything a visitor could make long (emails, phone numbers,
+   URLs, pasted text) is allowed to break. */
+a[href^="mailto:"], a[href^="tel:"], .break-anywhere { overflow-wrap: anywhere; word-break: break-word; }
+/* flex/grid children default to min-width:auto, so long text inside them wins the fight
+   against the viewport; this lets them shrink instead */
+@media (max-width: 480px) {
+  li.flex > * { min-width: 0; }
+  .headline, h1, h2, h3 { overflow-wrap: anywhere; }
+}
+
+/* --------- artwork cards: the number + area + placement chip row must wrap ---------
+   At 320px "Keizersgracht" + "On the canal wall" + the stop number exceed the column and
+   pushed the page 17px wide. Letting the row wrap keeps the chips readable and the page
+   inside the viewport. */
+@media (max-width: 520px) {
+  article .flex.items-center.gap-4 { flex-wrap: wrap; row-gap: 0.5rem; }
+  article .headline { overflow-wrap: anywhere; }
+}
+
+/* --------- thumb-sized links on phones --------- */
+@media (max-width: 640px) {
+  footer a, footer button, a[href^="mailto:"], a[href^="tel:"] { padding-top: 0.35rem; padding-bottom: 0.35rem; display: inline-block; }
+}
+
+/* --------- the embedded GetYourGuide availability widget ---------
+   It is a cross-origin iframe with its own white styling, so it sits in its own
+   framed box and is given more height on phones where its content stacks. */
+.live-avail iframe { background: #fff; }
+@media (max-width: 640px) { .live-avail iframe { height: 430px !important; } }
