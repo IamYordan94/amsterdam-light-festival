@@ -85,6 +85,12 @@ Nothing needs installing anywhere else: the scripts read those files directly, a
 3. Prices are per person for evening departures, as the platforms list them; their own pages remain the source of truth.
 4. Both platforms return 403 to automated link checks — which is why the daily job reads prices from the API and treats a 403 as normal.
 5. The brand and photographs are not ours. The demo notice, the AI labels and the commission disclosure are what keep the page legitimate. Keep them.
+6. **Wording now matches reality (24 Sep 2026).** The pre-affiliate copy — "Bookings are simulated,
+   no payment is taken and no card details are asked for" — was left on all four pages after the
+   site went affiliate-only, where the buttons do hand visitors to a real checkout. Every instance
+   is corrected: the footers say nothing is sold or charged here and the payment completes on the
+   operator's page, and the wizard's own copy says "They take the payment and email the tickets.
+   Nothing is charged on this site."
 
 ---
 
