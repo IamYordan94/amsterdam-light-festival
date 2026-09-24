@@ -116,7 +116,7 @@
       addonBlock +
       "</div>" +
       '<div class="flex flex-wrap items-center justify-between gap-4 border-t-2 border-dashed border-paper/25 px-6 py-7 md:px-10">' +
-      '<p class="label-xs text-paper/50">Total paid (simulated)</p>' +
+      '<p class="label-xs text-paper/50">Total for this booking — paid on the operator's site</p>' +
       '<p class="font-display text-4xl text-mint">' + money(booking.totalCents) + "</p></div></div>";
 
     ticketBox.hidden = false;

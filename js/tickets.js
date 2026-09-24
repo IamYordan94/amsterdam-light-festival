@@ -478,7 +478,7 @@
       '<input id="alf-email" type="email" value="' + esc(state.email) + '" placeholder="jane@example.com" class="mt-3 w-full border-2 bg-transparent px-5 py-4 text-base text-paper placeholder:text-paper/35 focus:outline-none ' +
       (emailError ? "border-magenta" : "border-paper/25 focus:border-mint") + '">' +
       '<span class="mt-2 block text-xs text-magenta"' + (emailError ? "" : " hidden") + ' id="alf-email-error">Enter a valid email</span></label>' +
-      "</div><p class=\"mt-4 text-xs text-paper/45\">This is a demo. Nothing is emailed and no payment is processed — your ticket appears on the next screen.</p></div>";
+      "</div><p class=\"mt-4 text-xs text-paper/45\">Nothing is emailed from this site and no payment is taken here — the next step hands you to the operator's own booking page.</p></div>";
 
     var addonHtml = addons.map(function (a) {
       var checked = state.addons.indexOf(a.code) !== -1;
@@ -739,7 +739,7 @@
       '<p class="mt-7 text-xs leading-relaxed text-paper/40">' +
       (affNow
         ? "Prices shown are our booking partner's current prices. We may earn a commission when you book — it never changes what you pay."
-        : "Free cancellation up to 24 hours before departure. Demo site — no payment is taken.") +
+        : "Free cancellation up to 24 hours before departure. Demo build — the booking and the payment happen on the operator's own page.") +
       "</p></div>";
   }
 
