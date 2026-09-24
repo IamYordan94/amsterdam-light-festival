@@ -327,3 +327,12 @@ a[href^="mailto:"], a[href^="tel:"], .break-anywhere { overflow-wrap: anywhere; 
    framed box and is given more height on phones where its content stacks. */
 .live-avail iframe { background: #fff; }
 @media (max-width: 640px) { .live-avail iframe { height: 430px !important; } }
+
+/* --------- the wizard's columns must be allowed to shrink ---------
+   The offer rails are horizontal scrollers, but their intrinsic width is the whole
+   track (1472px). A grid item defaults to min-width:auto, so the column grew to fit
+   the track and the page scrolled sideways on every phone - step 2 by 376px, step 3
+   by 196px. Letting the columns shrink makes the rail scroll inside its column. */
+#wizard .lg\:col-span-7, #wizard .lg\:col-span-5,
+#wizard .xl\:col-span-8, #wizard .xl\:col-span-4 { min-width: 0; }
+.offer-rail { min-width: 0; max-width: 100%; }
