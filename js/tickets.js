@@ -591,7 +591,7 @@
         '<p class="label-xs text-mint">Live availability — GetYourGuide</p>' +
         '<p class="text-xs text-paper/45">Prices and dates come from their booking system, not from this page</p></div>' +
         '<div class="mt-5 border-2 border-paper/15 bg-white">' +
-        '<iframe src="' + esc(src) + '" title="Live prices and dates from GetYourGuide" loading="lazy" ' +
+        '<iframe src="' + esc(src) + '" title="Live prices and dates from GetYourGuide" ' +
         'referrerpolicy="no-referrer-when-downgrade" style="width:100%;height:352px;border:0;display:block"></iframe>' +
         "</div>" +
         '<p class="mt-4 text-xs leading-relaxed text-paper/45">Booked and paid on GetYourGuide through our partner link — the price is the same as going to them directly.</p>' +
