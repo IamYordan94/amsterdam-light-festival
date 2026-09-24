@@ -336,3 +336,10 @@ a[href^="mailto:"], a[href^="tel:"], .break-anywhere { overflow-wrap: anywhere; 
 #wizard .lg\:col-span-7, #wizard .lg\:col-span-5,
 #wizard .xl\:col-span-8, #wizard .xl\:col-span-4 { min-width: 0; }
 .offer-rail { min-width: 0; max-width: 100%; }
+
+/* --------- the curated GetYourGuide modules on the home page ---------
+   Measured, not guessed: in a 404px column the widget's own document is 404 x 587, so the
+   frame is 592 tall and no internal scrollbar appears. On phones the column is narrower and
+   the widget stacks taller. */
+.live-cruises iframe { background: #fff; }
+@media (max-width: 767px) { .live-cruises iframe { height: 620px !important; } }
