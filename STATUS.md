@@ -149,6 +149,23 @@ Viator site itself"*; only merchant partners, a separate agreement, may sell in 
 | **FareHarbor Distribution Network** | links/widgets/QR for operators on FareHarbor at **15% commission** (vs ~8%) | the operator must be in the network and accept us; one affiliate agreement | **best next step** — Amsterdam Light Festival operators (Starboard Boats, Friendship Amsterdam) run on FareHarbor |
 | Our own checkout (Stripe + operator contracts) | we take the money and set the margin | KVK, a contract per operator, refund liability, customer service | not before real traffic and a company |
 
+
+### Where the affiliate actually shows (added 24 Sep 2026)
+
+Two places now show it to a visitor instead of hiding it in the link:
+
+1. **Home page, under the programme** — "The festival cruises, and what they cost tonight": three
+   GetYourGuide modules, one per festival cruise, each with its real photo, rating, price, date row
+   and booking button. They are the operators' own modules served by GetYourGuide, so the numbers
+   change when the operators change them.
+2. **Booking step 3** — the selected cruise's own module, right under the offer cards.
+
+Frame heights are measured, not guessed: in a desktop column the widget's own document is 404 x 587,
+so the frame is 592 tall and nothing scrolls inside it (phones: 620). The multi-activity widget was
+tried first and dropped — asked for our three tours by id it still filled a fourth cell with an
+unrelated tour, which would have made the heading a lie. Viator offers say plainly that Viator
+completes the booking, because their terms do not allow a price module to be embedded.
+
 The GetYourGuide availability widget is embedded per selected cruise and shows a visitor a real price
 and a real date without leaving the page — it is also what fills the two offers that used to read
 "price on the page". Viator offers say plainly that Viator completes the booking, because their terms
