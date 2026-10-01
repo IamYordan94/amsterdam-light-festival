@@ -10,7 +10,7 @@
   var data = window.ALF_DATA && window.ALF_DATA.artworks;
   if (!data || !data.length) return;
 
-  var works = data.slice().sort(function (a, b) { return a.stop - b.stop; });
+  var works = data.slice().sort(function (a, b) { return a.id - b.id; });
   var total = works.length;
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var current = 0;
@@ -32,12 +32,10 @@
     return '<li class="pg-item">' +
       '<button type="button" class="pg-row" role="tab" id="pg-tab-' + i + '" data-i="' + i + '"' +
       ' aria-selected="' + (i === 0) + '" aria-controls="pg-panel" tabindex="' + (i === 0 ? "0" : "-1") + '">' +
-        '<span class="pg-num">' + pad(w.stop) + '</span>' +
         '<span class="pg-text">' +
           '<span class="pg-name">' + esc(w.title) + '</span>' +
-          '<span class="pg-who">' + esc(w.kind || "") + '</span>' +
+          '<span class="pg-who">AI illustration</span>' +
         '</span>' +
-        '<span class="pg-area">' + esc(w.area) + '</span>' +
       '</button></li>';
   }).join("");
 
@@ -46,7 +44,7 @@
     // both layers eager: the second one becomes visible mid-crossfade, and a lazy image
     // there stalls exactly when the visitor is waiting for it
     return '<div class="pg-frame duotone bg-' + esc(w.tone) + (i === 0 ? " is-on" : "") + '" data-layer="' + i + '">' +
-      '<img src="' + esc(w.image.replace(/^\//, "")) + '" alt="' + esc(w.title) + ' — ' + esc(w.kind || "") + '" loading="eager" decoding="async">' +
+      '<img src="' + esc(w.image.replace(/^\//, "")) + '" alt="' + esc(w.title) + ' — AI illustration" loading="eager" decoding="async">' +
       '<div class="duotone-floor"></div></div>';
   }
 
@@ -60,19 +58,19 @@
             '<button type="button" class="pg-arrow" data-pg-prev aria-label="Previous work">' + CHEV_L + '</button>' +
             '<button type="button" class="pg-arrow" data-pg-next aria-label="Next work">' + CHEV_R + '</button>' +
           '</div>' +
-          '<p class="pg-count"><span data-pg-current>01</span><span class="pg-sep">/</span>' + pad(total) + '</p>' +
+          '<p class="pg-count"><span data-pg-current>1</span><span class="pg-sep">/</span>' + total + '</p>' +
           '<p class="pg-hint">Use ← → or scroll the list</p>' +
         '</div>' +
         '<div class="pg-meta">' +
           '<h3 class="pg-title" data-pg-title></h3>' +
           '<p class="pg-sub" data-pg-sub></p>' +
           '<p class="pg-desc" data-pg-desc></p>' +
-          '<a class="pg-link" data-pg-link href="artworks.html#stop-1">See it on the route<span aria-hidden="true"> →</span></a>' +
+          '<a class="pg-link" data-pg-link href="artworks.html#stop-1">See the illustrations<span aria-hidden="true"> →</span></a>' +
         '</div>' +
       '</div>' +
       '<div class="pg-index-wrap">' +
-        '<p class="pg-index-label">All ' + total + ' works</p>' +
-        '<ol class="pg-index" role="tablist" aria-label="All ' + total + ' works" aria-orientation="vertical">' + rows + '</ol>' +
+        '<p class="pg-index-label">All ' + total + ' illustrations</p>' +
+        '<ol class="pg-index" role="tablist" aria-label="All ' + total + ' illustrations" aria-orientation="vertical">' + rows + '</ol>' +
       '</div>' +
     '</div>';
 
@@ -107,7 +105,7 @@
       var img = incoming.querySelector("img");
       img.loading = "eager";
       img.src = w.image.replace(/^\//, "");
-      img.alt = w.title + " — " + (w.kind || "");
+      img.alt = w.title + " — AI illustration";
 
       frames[front].classList.remove("is-on");
       incoming.classList.add("is-on");
@@ -121,10 +119,11 @@
       tabs[n].tabIndex = n === i ? 0 : -1;
     });
     elTitle.textContent = w.title;
-    elSub.textContent = (w.kind || "") + " · " + w.area;
-    elDesc.textContent = w.description;
-    elCount.textContent = pad(w.stop);
-    elLink.href = "artworks.html#stop-" + w.stop;
+    elSub.textContent = "AI illustration, made for this guide";
+    elDesc.textContent = "Not a photograph of a real work, and it stands nowhere on the canals. " +
+      "The festival publishes its own line-up closer to the opening.";
+    elCount.textContent = String(i + 1);
+    elLink.href = "artworks.html#stop-" + w.id;
     host.querySelector(".pg-frames").setAttribute("aria-labelledby", "pg-tab-" + i);
 
     preload(i + 1);

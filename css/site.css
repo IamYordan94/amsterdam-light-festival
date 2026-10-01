@@ -343,3 +343,55 @@ a[href^="mailto:"], a[href^="tel:"], .break-anywhere { overflow-wrap: anywhere; 
    the widget stacks taller. */
 .live-cruises iframe { background: #fff; }
 @media (max-width: 767px) { .live-cruises iframe { height: 620px !important; } }
+
+/* --------- the booking hub: both platforms, the same weight ---------
+   Styling lives here, not in the markup: the site ships a compiled Tailwind, so any
+   utility class invented in hub.js would simply not exist. */
+.hub-filters { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.hub-filter { background: transparent; border: 2px solid rgba(255, 255, 255, 0.25); color: rgba(255, 255, 255, 0.7); cursor: pointer; font: inherit; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; padding: 0.85rem 1.25rem; transition: border-color 0.2s, color 0.2s, background-color 0.2s; }
+.hub-filter:hover { border-color: #fff; color: #fff; }
+.hub-filter.is-on { background: #77d2b6; border-color: #77d2b6; color: #080c20; }
+
+.hub-block .hub-h2, .hub-h2 { color: #fff; font-family: var(--font-display); font-size: clamp(1.35rem, 3vw, 2rem); line-height: 1.1; margin-top: 3.5rem; }
+.hub-h2-table { margin-top: 4.5rem; }
+.hub-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); margin-top: 1.4rem; }
+
+.hub-card { background: rgba(16, 23, 54, 0.55); border: 2px solid rgba(255, 255, 255, 0.2); display: flex; flex-direction: column; overflow: hidden; }
+.hub-card-img { display: block; height: 200px; object-fit: cover; width: 100%; }
+.hub-body { display: flex; flex-direction: column; gap: 0.7rem; padding: 1.25rem; }
+.hub-body-cta { padding-top: 0; }
+.hub-prov-viator { color: #9db6d6; }
+.hub-prov-gyg { color: #d9556b; }
+.hub-title { color: #fff; font-family: var(--font-display); font-size: 1.15rem; line-height: 1.25; }
+.hub-meta { color: rgba(255, 255, 255, 0.72); font-size: 0.85rem; }
+.hub-note { color: rgba(255, 255, 255, 0.55); font-size: 0.85rem; }
+.hub-foot { align-items: baseline; display: flex; gap: 1rem; justify-content: space-between; margin-top: auto; padding-top: 0.6rem; }
+.hub-price { color: #fff; font-family: var(--font-display); font-size: 1.6rem; }
+.hub-dep { color: rgba(255, 255, 255, 0.5); text-align: right; }
+
+.hub-cta { border: 2px solid #77d2b6; color: #77d2b6; display: block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.22em; margin-top: 0.4rem; padding: 0.9rem 1rem; text-align: center; text-transform: uppercase; transition: background-color 0.2s, color 0.2s; }
+.hub-cta:hover { background: #77d2b6; color: #080c20; }
+
+.hub-live { border-top: 2px solid rgba(255, 255, 255, 0.12); }
+.hub-live-note { color: rgba(255, 255, 255, 0.5); padding: 0.9rem 1.25rem 0.6rem; }
+iframe.live-avail { background: #fff; border: 0; display: block; height: 592px; width: 100%; }
+@media (max-width: 767px) { iframe.live-avail { height: 456px; } }
+
+.hub-tablewrap { margin-top: 1.2rem; overflow-x: auto; }
+.hub-table { border-collapse: collapse; font-size: 0.85rem; min-width: 46rem; text-align: left; width: 100%; }
+.hub-table th, .hub-table td { color: rgba(255, 255, 255, 0.72); padding: 0.75rem 1rem 0.75rem 0; vertical-align: top; }
+.hub-table thead th { color: rgba(255, 255, 255, 0.45); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.hub-table tbody tr { border-top: 1px solid rgba(255, 255, 255, 0.15); }
+.hub-table tbody th { color: #fff; font-weight: 600; }
+.hub-table .hub-strong { color: #fff; font-family: var(--font-display); }
+.hub-table a { color: #77d2b6; text-decoration: underline; }
+.hub-fine { color: rgba(255, 255, 255, 0.6); font-size: 0.85rem; margin-top: 2rem; max-width: 52rem; }
+
+/* --------- the placeholder map: question marks, not positions ---------
+   The route is unpublished, so the markers say so and move. Everything here exists to
+   stop a visitor reading these as real locations. */
+.alf-pin-q { border-color: var(--color-magenta); color: var(--color-magenta); font-family: var(--font-display); font-size: 15px; }
+.alf-legend-unknown { background: transparent; border: 2px solid var(--color-magenta); border-radius: 999px; color: var(--color-magenta); display: inline-block; font-size: 10px; font-weight: 800; height: 14px; line-height: 12px; text-align: center; width: 14px; }
+.alf-legend-unknown::before { content: "?"; }
+.leaflet-marker-icon { transition: transform 1.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
+@media (prefers-reduced-motion: reduce) { .leaflet-marker-icon { transition: none; } }

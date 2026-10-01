@@ -177,12 +177,12 @@
     var wrap = document.querySelector(".divide-y-2.divide-ink\\/25");
     if (!wrap) return;
     var answers = [
-      "No. All 31 artworks stand in public space and the walking route is free, every night from 17:00 to 23:00. You only need a ticket to see the route from the water — that is the canal cruise.",
-      "75 minutes on the Water Colors route (open sloop and glass-roof boat) and 95 minutes on the Grand route with the historic salon boat, which adds the Oosterdok artworks.",
-      "The sloop has wool blankets on every seat and the skipper hands out hot drinks, but it is genuinely open air. If you are sailing with small children or want to stay dry in rain, take the glass-roof boat.",
-      "Yes, free of charge up to 24 hours before departure, subject to availability. Bring your booking reference — it starts with ALF — to the dock or use it in the change link in your confirmation.",
-      "The glass-roof boat boards step-free at Centraal Station Pier 14 and Rokin Dock and has space for two wheelchairs per sailing. The sloop and the salon boat need a step down into the boat.",
-      "Fridays, Saturdays and the week between Christmas and New Year, especially the 19:00 and 19:45 departures. Sail at 17:30 in the blue hour or at 21:15 for the quietest canals."
+      "No. The works stand in public space along the canals and the walking route is free. You only need a ticket to see the route from the water — that is the canal cruise, and the operators sell it on Viator and GetYourGuide.",
+      "It depends on the cruise you pick. The operators offer different boats and lengths, and each one lists its own duration on the booking page — you will see it before you pay.",
+      "Open boats are genuinely open air, which is half the point on a clear night. Most provide blankets and some serve hot drinks, but check the operator's own page: what is included is different on every cruise.",
+      "Cancellation and change rules are the operator's, not ours — you book on their page, so their policy applies. You see the exact terms on that page before you pay, and your confirmation comes from them.",
+      "It varies by boat and by jetty. A boat with a roof and a step-free gangway is the easier choice if you need one, and the operator's page says what their boat offers — worth reading before you book.",
+      "Weekend evenings and the days between Christmas and New Year are the busiest, and the popular departures sell out first. If you want a quiet canal, go on a weekday and book early for the busy nights."
     ];
     var ICON_PLUS = '<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>';
     var ICON_MINUS = '<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus" aria-hidden="true"><path d="M5 12h14"></path></svg>';

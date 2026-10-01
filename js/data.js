@@ -4,320 +4,130 @@ window.ALF_DATA = {
  "artworks": [
   {
    "id": 1,
-   "stop": 1,
    "title": "Northern Whale",
-   "area": "Amstel",
-   "location": "Amstel, near Blauwbrug",
-   "description": "A wireframe whale breaches the black water of the Amstel, drawn in a single unbroken line of warm light. From a passing boat the animal appears to swim alongside you.",
    "image": "/images/whale.jpg",
-   "tone": "sky",
-   "lat": "52.36635",
-   "lng": "4.9013",
-   "onWater": true,
-   "kind": "Light sculpture on the water",
-   "placement": "On the water"
+   "tone": "sky"
   },
   {
    "id": 2,
-   "stop": 2,
    "title": "Rituals of Repetition",
-   "area": "Herengracht",
-   "location": "Herengracht 502",
-   "description": "Hundreds of illuminated rings stack into a facade-sized wall of circles, doubled perfectly by the canal below. Every ring pulses a half-second after its neighbour.",
    "image": "/images/rings.jpg",
-   "tone": "amber",
-   "lat": "52.36885",
-   "lng": "4.8879",
-   "onWater": false,
-   "kind": "Concentric light rings on the water",
-   "placement": "On the quay"
+   "tone": "amber"
   },
   {
    "id": 3,
-   "stop": 3,
    "title": "Polaris",
-   "area": "Oosterdok",
-   "location": "Oosterdok, opposite NEMO",
-   "description": "A six-metre star hovers above the water and finds its twin in the reflection — a compass point for the whole route, visible from three bridges away.",
    "image": "/images/polaris.jpg",
-   "tone": "magenta",
-   "lat": "52.37395",
-   "lng": "4.9118",
-   "onWater": true,
-   "kind": "Navigational light work on the water",
-   "placement": "On the water"
+   "tone": "magenta"
   },
   {
    "id": 4,
-   "stop": 4,
    "title": "Ovum",
-   "area": "Amstel",
-   "location": "Amstel, Kloveniersburgwal corner",
-   "description": "A woven lattice egg, four metres tall, breathing between coral and gold. Sit inside the light and the canal noise drops away.",
    "image": "/images/egg.jpg",
-   "tone": "amber",
-   "lat": "52.3674",
-   "lng": "4.897",
-   "onWater": false,
-   "kind": "Glowing form on the water",
-   "placement": "On the quay"
+   "tone": "amber"
   },
   {
    "id": 5,
-   "stop": 5,
    "title": "Vortex",
-   "area": "Oosterdok",
-   "location": "Oosterdokskade, above the water",
-   "description": "Suspended between two cranes, a spinning disc of violet light throws a slow spiral across the harbour — the largest work of the 2026 edition.",
    "image": "/images/spiral.jpg",
-   "tone": "sky",
-   "lat": "52.3757",
-   "lng": "4.9095",
-   "onWater": true,
-   "kind": "Spiral light work over the water",
-   "placement": "On the water"
+   "tone": "sky"
   },
   {
    "id": 6,
-   "stop": 6,
    "title": "Cut Diamond",
-   "area": "Prinsengracht",
-   "location": "Prinsengracht 263, at the water",
-   "description": "A floating gem of blue neon edges, cut from nothing but line and reflection. Best seen low, from a boat deck, when the water is still.",
    "image": "/images/diamond.jpg",
-   "tone": "sky",
-   "lat": "52.3752",
-   "lng": "4.8839",
-   "onWater": true,
-   "kind": "Faceted light sculpture on the quay",
-   "placement": "On the water"
+   "tone": "sky"
   },
   {
    "id": 7,
-   "stop": 7,
    "title": "Wave Function",
-   "area": "Prinsengracht",
-   "location": "Prinsengracht, Berenstraat bridge",
-   "description": "A sine wave of 2,400 LEDs rides across the bridge and keeps travelling in the canal below. Boats sail straight through the crest.",
    "image": "/images/wave-bridge.jpg",
-   "tone": "magenta",
-   "lat": "52.3706",
-   "lng": "4.8833",
-   "onWater": true,
-   "kind": "Light work on the bridge",
-   "placement": "On the water"
+   "tone": "magenta"
   },
   {
    "id": 8,
-   "stop": 8,
    "title": "Second Wave",
-   "area": "Keizersgracht",
-   "location": "Keizersgracht, Leidsegracht corner",
-   "description": "The companion piece to Wave Function, tuned a semitone lower and coloured in dawn pink. Together they mark the western turn of the route.",
    "image": "/images/wave-pink.jpg",
-   "tone": "magenta",
-   "lat": "52.3668",
-   "lng": "4.8847",
-   "onWater": true,
-   "kind": "Low light ribbon across the water",
-   "placement": "On the water"
+   "tone": "magenta"
   },
   {
    "id": 9,
-   "stop": 9,
    "title": "Bloom",
-   "area": "Amstel",
-   "location": "Amstel, opposite Carré",
-   "description": "Nine floating flowers open and close on the river's surface, timed to the wake of passing boats. Sail slowly and they follow you.",
    "image": "/images/flowers.jpg",
-   "tone": "sky",
-   "lat": "52.36185",
-   "lng": "4.9037",
-   "onWater": true,
-   "kind": "Flower-shaped light work on the quay",
-   "placement": "On the water"
+   "tone": "sky"
   },
   {
    "id": 10,
-   "stop": 10,
    "title": "Firework Bridge",
-   "area": "Herengracht",
-   "location": "Herengracht, Brouwersgracht crossing",
-   "description": "An arch of white sparks frozen mid-explosion over the water — a firework that never falls, mirrored into a full circle by the canal.",
    "image": "/images/bridge-burst.jpg",
-   "tone": "amber",
-   "lat": "52.38",
-   "lng": "4.888",
-   "onWater": true,
-   "kind": "Bridge-wide light installation",
-   "placement": "On the water"
+   "tone": "amber"
   },
   {
    "id": 11,
-   "stop": 11,
    "title": "Amber Gate",
-   "area": "Oosterdok",
-   "location": "Oosterdok, floating platform",
-   "description": "A monumental gate of amber light drifts on a pontoon, changing shape as your boat passes through it.",
    "image": "/images/arch-orange.jpg",
-   "tone": "amber",
-   "lat": "52.3743",
-   "lng": "4.9079",
-   "onWater": true,
-   "kind": "Illuminated arch over the water",
-   "placement": "On the water"
+   "tone": "amber"
   },
   {
    "id": 12,
-   "stop": 12,
    "title": "Night Tower",
-   "area": "Oosterdok",
-   "location": "Montelbaanstoren, Oudeschans",
-   "description": "The 16th-century tower is re-lit hour by hour in the colours of the canal water below — the closing work of the 2026 route.",
    "image": "/images/tower-boat.jpg",
-   "tone": "sky",
-   "lat": "52.3706",
-   "lng": "4.9037",
-   "onWater": true,
-   "kind": "Vertical light work on the water",
-   "placement": "On the water"
+   "tone": "sky"
   },
   {
    "id": 13,
-   "stop": 13,
    "title": "Lantern Herd",
-   "area": "Herengracht",
-   "location": "Herengracht, near Leidsestraat",
-   "kind": "Drifting lantern light on the water",
-   "placement": "On the water",
-   "tone": "amber",
    "image": "/images/lantern-herd.jpg",
-   "onWater": true,
-   "lat": "52.36751",
-   "lng": "4.88316",
-   "description": "A herd of small lantern-creatures of warm light drifts in a loose line along the Herengracht, travelling with the current. From the bank they read as a flock; from a boat you pass through them."
+   "tone": "amber"
   },
   {
    "id": 14,
-   "stop": 14,
    "title": "Signal",
-   "area": "Oosterdok",
-   "location": "Oosterdok, near the maritime museum",
-   "kind": "Vertical light beam from the water",
-   "placement": "On the water",
-   "tone": "sky",
    "image": "/images/signal.jpg",
-   "onWater": true,
-   "lat": "52.37402",
-   "lng": "4.91396",
-   "description": "A single thin beam of ice-blue light rises straight out of the black water, high enough to be seen across the whole Oosterdok. Its base is a low pontoon, lit from below."
+   "tone": "sky"
   },
   {
    "id": 15,
-   "stop": 15,
    "title": "Paper Crane",
-   "area": "Keizersgracht",
-   "location": "Keizersgracht, near Westermarkt",
-   "kind": "Suspended light work between the quays",
-   "placement": "Over the water",
-   "tone": "sky",
    "image": "/images/crane.jpg",
-   "onWater": false,
-   "lat": "52.37091",
-   "lng": "4.88333",
-   "description": "An origami crane folded out of white light hangs on fine cables between two quay walls, its folds catching the light differently from every angle. Passing under it is the point."
+   "tone": "sky"
   },
   {
    "id": 16,
-   "stop": 16,
    "title": "Tide",
-   "area": "Prinsengracht",
-   "location": "Prinsengracht, near Noorderkerk",
-   "kind": "Bands of light along the canal wall",
-   "placement": "On the canal wall",
-   "tone": "magenta",
    "image": "/images/tide.jpg",
-   "onWater": false,
-   "lat": "52.37827",
-   "lng": "4.88726",
-   "description": "Bands of mint light run along a long stretch of brick wall just above the waterline, compressing and repeating into the distance. Slow enough to look like a tide moving in."
+   "tone": "magenta"
   },
   {
    "id": 17,
-   "stop": 17,
    "title": "Moths",
-   "area": "Amstel",
-   "location": "Amstel, near the Stopera",
-   "kind": "Swarm of small lights above the water",
-   "placement": "Over the water",
-   "tone": "amber",
    "image": "/images/moths.jpg",
-   "onWater": false,
-   "lat": "52.36685",
-   "lng": "4.90043",
-   "description": "Dozens of small pale lights drift in the air above the Amstel like moths at a lamp, each on its own slow path. Stand still and they gather; walk on and they scatter."
+   "tone": "amber"
   },
   {
    "id": 18,
-   "stop": 18,
    "title": "Stairs",
-   "area": "Herengracht",
-   "location": "Herengracht, near the Brouwersgracht",
-   "kind": "Staircase of light rising from the water",
-   "placement": "On the water",
-   "tone": "amber",
    "image": "/images/stairs.jpg",
-   "onWater": true,
-   "lat": "52.38109",
-   "lng": "4.88634",
-   "description": "A wide staircase of pale amber light rises out of the canal, each step a slab of glow. The flight is doubled in the still water underneath it, so it appears to descend too."
+   "tone": "amber"
   },
   {
    "id": 19,
-   "stop": 19,
    "title": "Woven Water",
-   "area": "Keizersgracht",
-   "location": "Keizersgracht, between two bridges",
-   "kind": "Light net suspended between bridges",
-   "placement": "Over the water",
-   "tone": "sky",
    "image": "/images/woven.jpg",
-   "onWater": false,
-   "lat": "52.36785",
-   "lng": "4.88908",
-   "description": "A broad net of thin white light is stretched high between two bridges. Seen from a boat underneath, the mesh hangs against the sky and fills the canal below with its reflection."
+   "tone": "sky"
   },
   {
    "id": 20,
-   "stop": 20,
    "title": "Afterglow",
-   "area": "Oosterdok",
-   "location": "Oosterdok, near the library",
-   "kind": "Low field of ambient light on the water",
-   "placement": "On the water",
-   "tone": "magenta",
    "image": "/images/afterglow.jpg",
-   "onWater": true,
-   "lat": "52.37505",
-   "lng": "4.91058",
-   "description": "No single object: a wide low field of warm light lies across the water and spills onto the quay stone, brightest at the far edge. The quietest work on the route, and the last stop."
+   "tone": "magenta"
   }
  ],
  "cruises": {
   "boats": [
    {
-    "id": 4,
     "code": "open",
-    "name": "Open Sloop",
-    "kind": "Open boat",
-    "route": "Water Colors route",
-    "description": "A small open sloop with blankets and a skipper who knows every artist. Twelve seats, no roof — the sky is part of the artwork.",
-    "durationMinutes": 75,
-    "capacity": 12,
-    "adultPrice": 2650,
-    "childPrice": 1400,
-    "image": "/images/boat-spheres.jpg",
-    "tone": "mint",
+    "label": "Open boat",
     "affiliate": {
      "provider": "viator",
      "url": "https://www.getyourguide.com/en-gb/amsterdam-l36/amsterdam-light-festival-boat-with-unlimited-drinks-snack-t501688/?partner_id=KRAI3FK",
@@ -341,10 +151,11 @@ window.ALF_DATA = {
        "provider": "viator",
        "title": "Amsterdam Canal Cruise in Open Boat with Unlimited Drinks Option",
        "url": "https://www.viator.com/en-GB/tours/Amsterdam/Amsterdam-Canal-Cruise-60-minutes/d525-21949P15?mcid=42383&pid=P00296752&medium=api&api_version=2.0",
+       "image": "https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/15/73/df/b2.jpg",
        "priceFrom": 2950,
        "durationMinutes": null,
        "rating": 4.92,
-       "reviews": 5873,
+       "reviews": 5902,
        "note": "Open boat with unlimited drinks",
        "times": [
         "16:00",
@@ -388,18 +199,8 @@ window.ALF_DATA = {
     }
    },
    {
-    "id": 5,
     "code": "covered",
-    "name": "Glass-Roof Cruise",
-    "kind": "Covered boat",
-    "route": "Water Colors route",
-    "description": "Heated, glass-roofed and step-free, with a live audio introduction to all 31 works. The reliable choice in Dutch winter weather.",
-    "durationMinutes": 75,
-    "capacity": 40,
-    "adultPrice": 3250,
-    "childPrice": 1750,
-    "image": "/images/cruise-arch.jpg",
-    "tone": "sky",
+    "label": "Covered, glass-roof boat",
     "affiliate": {
      "provider": "viator",
      "url": "https://www.viator.com/en-GB/tours/Amsterdam/Amsterdam-Light-Festival-Canal-Cruise/d525-91551P4?mcid=42383&pid=P00296752&medium=api&api_version=2.0",
@@ -410,6 +211,7 @@ window.ALF_DATA = {
        "provider": "viator",
        "title": "Amsterdam Light Festival Cruise by Captain Dave",
        "url": "https://www.viator.com/en-GB/tours/Amsterdam/Amsterdam-Light-Festival-Canal-Cruise/d525-91551P4?mcid=42383&pid=P00296752&medium=api&api_version=2.0",
+       "image": "https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/09/df/34/7b.jpg",
        "priceFrom": 5200,
        "durationMinutes": null,
        "rating": 4.89,
@@ -450,10 +252,11 @@ window.ALF_DATA = {
        "provider": "viator",
        "title": "Amsterdam: Luxury Canal Cruise including Cocktails & Snacks",
        "url": "https://www.viator.com/en-GB/tours/Amsterdam/Amsterdam-Open-Boat-Canal-Cruise/d525-23507P1?mcid=42383&pid=P00296752&medium=api&api_version=2.0",
+       "image": "https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/r/32/b6/be/62/caption.jpg",
        "priceFrom": 2995,
        "durationMinutes": null,
        "rating": 4.91,
-       "reviews": 6775,
+       "reviews": 6806,
        "note": "Evening cruise with cocktails and snacks",
        "times": [
         "16:00",
@@ -489,18 +292,8 @@ window.ALF_DATA = {
     }
    },
    {
-    "id": 6,
     "code": "salon",
-    "name": "Salon Boat — Grand Route",
-    "kind": "Historic salon boat",
-    "route": "Grand route (extended)",
-    "description": "A 1928 salon boat on the long route, including the Oosterdok works most boats skip. Twenty seats, table service, low lighting.",
-    "durationMinutes": 95,
-    "capacity": 20,
-    "adultPrice": 4500,
-    "childPrice": 2500,
-    "image": "/images/tower-boat.jpg",
-    "tone": "magenta",
+    "label": "Historic salon boat",
     "affiliate": {
      "provider": "viator",
      "url": "https://www.getyourguide.com/en-gb/amsterdam-l36/luxury-amsterdam-light-festival-cruise-live-commentary-t501088/?partner_id=KRAI3FK",
@@ -524,10 +317,11 @@ window.ALF_DATA = {
        "provider": "viator",
        "title": "Amsterdam Classic Saloon Boat Cruise with Drinks and Cheese",
        "url": "https://www.viator.com/en-GB/tours/Amsterdam/Amsterdam-Canal-Cruise/d525-75227P6?mcid=42383&pid=P00296752&medium=api&api_version=2.0",
+       "image": "https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/r/33/5e/62/89/caption.jpg",
        "priceFrom": 1699,
        "durationMinutes": null,
        "rating": 4.85,
-       "reviews": 33484,
+       "reviews": 33502,
        "note": "Classic saloon boat with drinks and cheese",
        "times": [
         "16:00",
@@ -564,44 +358,6 @@ window.ALF_DATA = {
       }
      ]
     }
-   }
-  ],
-  "docks": [
-   {
-    "id": 1,
-    "code": "cs",
-    "name": "Centraal Station — Pier 14",
-    "address": "Prins Hendrikkade 25",
-    "note": "2 min walk from the station's canal-side exit.",
-    "lat": "52.37650",
-    "lng": "4.89950"
-   },
-   {
-    "id": 2,
-    "code": "anne",
-    "name": "Anne Frank House Jetty",
-    "address": "Prinsengracht 263",
-    "note": "Closest to the western canal belt artworks.",
-    "lat": "52.37515",
-    "lng": "4.88400"
-   },
-   {
-    "id": 3,
-    "code": "rokin",
-    "name": "Rokin Dock",
-    "address": "Rokin 125",
-    "note": "Under the Rokin metro exit, indoor waiting area.",
-    "lat": "52.36980",
-    "lng": "4.89170"
-   },
-   {
-    "id": 4,
-    "code": "hermitage",
-    "name": "Amstel — Hermitage Jetty",
-    "address": "Amstel 51",
-    "note": "Starts the route right beside the Amstel artworks.",
-    "lat": "52.36555",
-    "lng": "4.90090"
    }
   ],
   "slots": [
@@ -730,16 +486,6 @@ window.ALF_DATA = {
    "2027-01-17"
   ],
   "festivalStart": "2026-11-26",
-  "festivalEnd": "2027-01-17",
-  "partners": {
-   "viator": {
-    "partnerId": "",
-    "trackingParams": "pid=YOUR_PID&mcid=42383&medium=link&medium_version=selector"
-   },
-   "getyourguide": {
-    "partnerId": "",
-    "trackingParams": "partner_id=YOUR_PARTNER_ID"
-   }
-  }
+  "festivalEnd": "2027-01-17"
  }
 };

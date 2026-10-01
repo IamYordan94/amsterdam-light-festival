@@ -19,12 +19,12 @@
   a.btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
 </style>
 <script>
-  /* tidy URLs: /ticket/ALF-XXXXXX (works at any sub-path, e.g. /repo/ticket/ALF-XXXXXX) */
+  /* tidy URLs: old confirmation links (/ticket/ALF-XXXXXX) now belong on the booking hub */
   (function () {
-    var m = window.location.pathname.match(/\/ticket\/([^\/]+)\/?$/);
+    var m = window.location.pathname.match(/\/ticket\/?([^\/]*)\/?$/);
     if (m) {
-      var base = window.location.pathname.replace(/\/ticket\/.*$/, "/");
-      window.location.replace(base + "ticket.html?ref=" + encodeURIComponent(m[1]));
+      var base = window.location.pathname.replace(/\/ticket\/?.*$/, "/");
+      window.location.replace(base + "tickets.html");
     }
   })();
 </script>
