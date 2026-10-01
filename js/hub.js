@@ -75,7 +75,7 @@
   function viatorCard(o) {
     return '' +
       '<article class="hub-card" data-provider="viator">' +
-        (o.image ? '<img class="hub-card-img" src="' + esc(o.image) + '" alt="" loading="lazy" referrerpolicy="no-referrer">' : "") +
+        (o.image ? '<img class="hub-card-img" src="' + esc(o.image) + '" alt="" loading="eager" referrerpolicy="no-referrer">' : "") +
         '<div class="hub-body">' +
           '<p class="label-xs hub-prov hub-prov-viator">Viator</p>' +
           '<h3 class="hub-title">' + esc(o.title) + "</h3>" +
@@ -101,7 +101,9 @@
         (id
           ? '<div class="hub-live">' +
               '<p class="label-xs hub-live-note">Live prices and dates · your date carries through to their checkout</p>' +
-              '<iframe class="live-avail" src="' + availabilityFrame(id) + '" title="Availability on GetYourGuide" loading="eager"></iframe>' +
+              '<div class="hub-live-inner">' +
+                '<iframe class="live-avail" src="' + availabilityFrame(id) + '" title="Availability on GetYourGuide" loading="eager" scrolling="no"></iframe>' +
+              "</div>" +
             "</div>"
           : '<div class="hub-body hub-body-cta"><a class="hub-cta" href="' + esc(o.url) + '" ' + rel() + ">Open on GetYourGuide</a></div>") +
       "</article>";
@@ -179,4 +181,10 @@
     b.addEventListener("click", function () { apply(b.getAttribute("data-filter")); });
   });
   apply("all");
+
+  /* The GetYourGuide module is designed for a column around 560px wide: below that it
+     stacks and fits, above ~620 it lays out a two-column card that overflows its frame by
+     249px (measured at 620/700/800/916/1000/1100/1240/1400). So it gets a fixed 560px
+     column, centred, on any screen wide enough; on a phone it takes the full width and the
+     frame is given the extra height its stacked layout needs. */
 })();
