@@ -156,23 +156,36 @@ Viator site itself"*; only merchant partners, a separate agreement, may sell in 
 | Our own checkout (Stripe + operator contracts) | we take the money and set the margin | KVK, a contract per operator, refund liability, customer service | not before real traffic and a company |
 
 
-### Where the affiliate actually shows (added 24 Sep 2026)
+### Where the affiliate actually shows (rewritten 1 Oct 2026)
 
-Two places now show it to a visitor instead of hiding it in the link:
+One place now, and it is the whole booking page: **/tickets is a two-platform hub**, not a wizard.
+Every Light Festival cruise we can find on either platform sits side by side, and each one takes a
+visitor as far as its platform allows:
 
-1. **Home page, under the programme** — "The festival cruises, and what they cost tonight": three
-   GetYourGuide modules, one per festival cruise, each with its real photo, rating, price, date row
-   and booking button. They are the operators' own modules served by GetYourGuide, so the numbers
-   change when the operators change them.
-2. **Booking step 3** — the selected cruise's own module, right under the offer cards.
+- **GetYourGuide offers embed GetYourGuide's own availability module** — their photo, their price,
+  their date row, and their "Check availability" button. Picking a date there carries the date into
+  their checkout, so the visitor does not re-enter anything.
+- **Viator offers carry Viator's own API data** — the operator's real photo (674x446 from their CDN),
+  the live "from" price, the rating and review count, the departure window, and a button straight to
+  the operator's booking calendar with our tracking id.
 
-Frame heights are measured, not guessed: in a desktop column the widget's own document is 404 x 587,
-so the frame is 592 tall and nothing scrolls inside it (phones: 620). The multi-activity widget was
-tried first and dropped — asked for our three tours by id it still filled a fourth cell with an
-unrelated tour, which would have made the heading a lie. Viator offers say plainly that Viator
-completes the booking, because their terms do not allow a price module to be embedded.
+**The wizard is gone.** It collected a date, a boat, guests, a name and an email, then handed the
+visitor to a partner page where they typed all of it again. Nothing it collected could be carried
+across, so it was theatre. Deleted: js/tickets.js, js/ticket.js, ticket.html.
 
-The GetYourGuide availability widget is embedded per selected cruise and shows a visitor a real price
-and a real date without leaving the page — it is also what fills the two offers that used to read
-"price on the page". Viator offers say plainly that Viator completes the booking, because their terms
-do not allow a price module to be embedded.
+**The home page no longer carries GetYourGuide modules** (removed 1 Oct 2026 on the client's
+instruction: one platform should not get the homepage while the other gets a tab). It carries a
+band linking to the hub instead.
+
+**Module geometry, measured (important):** the GetYourGuide availability frame is a fixed-width
+design. Measured across 560/576/600/620/640/700/800/916/1000/1100/1240/1400px: it stacks and
+almost-fits up to ~576 (its document is always 16px wider than its window - that is their own
+scrollbar gutter), and at >=600 it switches to a two-column card whose document is window+249,
+i.e. it overflows badly. So it gets a **centred 560px column** on any screen wide enough, the frame
+is **730px tall desktop / 870px phone** (its content measures 659 tall, so nothing scrolls inside),
+and `scrolling="no"` hides their 16px gutter scrollbar. Verified live: full module visible, no
+inner scrollbar, on desktop and phone.
+
+**Viator photos must not be lazy-loaded.** With `loading="lazy"` and the cards below the fold, all
+four photos measured naturalWidth 0 - never loaded, empty grey boxes. Eager: all four render.
+
