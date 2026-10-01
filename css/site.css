@@ -397,3 +397,45 @@ iframe.live-avail { background: #fff; border: 0; display: block; height: 730px; 
 .alf-legend-unknown::before { content: "?"; }
 .leaflet-marker-icon { transition: transform 1.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
 @media (prefers-reduced-motion: reduce) { .leaflet-marker-icon { transition: none; } }
+
+/* --------- the guide pages (dates / cruises / route / practical) ---------
+   Plain CSS on purpose: the site's Tailwind was compiled long before these pages existed,
+   so utilities invented here (pb-24, md:px-8, text-sky) simply do not exist in style.css. */
+.gd-hero { background: #080c20; padding: 8.5rem 1.25rem 2.5rem; }
+@media (min-width: 768px) { .gd-hero { padding: 11rem 2rem 3.5rem; } }
+.gd-sec { background: #101736; padding: 0 1.25rem 6rem; }
+@media (min-width: 768px) { .gd-sec { padding: 0 2rem 7rem; } }
+.gd-wrap { margin-left: auto; margin-right: auto; max-width: 1080px; }
+.gd-h1 { color: #fff; font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.02; margin-top: 1.1rem; }
+.gd-lede { color: rgba(255, 255, 255, 0.72); font-size: 1.02rem; line-height: 1.75; margin-top: 1.5rem; max-width: 46rem; }
+.gd-lede strong, .gd-p strong { color: #fff; }
+.gd-h2 { color: #fff; font-family: var(--font-display); font-size: clamp(1.35rem, 3vw, 2rem); line-height: 1.1; margin-top: 4rem; }
+.gd-p { color: rgba(255, 255, 255, 0.72); font-size: 0.96rem; line-height: 1.78; margin-top: 1.1rem; max-width: 46rem; }
+.gd-p a, .gd-li a { color: #77d2b6; text-decoration: underline; }
+.gd-subnav { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2.4rem; }
+.gd-subnav a { border: 2px solid rgba(255, 255, 255, 0.18); color: rgba(255, 255, 255, 0.7); font-size: 0.66rem; font-weight: 700; letter-spacing: 0.16em; padding: 0.7rem 1rem; text-transform: uppercase; transition: border-color 0.2s, color 0.2s; }
+.gd-subnav a:hover { border-color: rgba(255, 255, 255, 0.5); color: #fff; }
+.gd-subnav a.is-here { border-color: #77d2b6; color: #77d2b6; }
+.gd-facts { border: 2px solid rgba(255, 255, 255, 0.15); margin-top: 2.5rem; }
+.gd-facts div { align-items: baseline; border-top: 1px solid rgba(255, 255, 255, 0.12); display: flex; font-size: 0.92rem; gap: 1.5rem; justify-content: space-between; padding: 0.95rem 1.25rem; }
+.gd-facts div:first-child { border-top: 0; }
+.gd-facts .k { color: rgba(255, 255, 255, 0.55); }
+.gd-facts .v { color: #fff; text-align: right; }
+.gd-cards { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); margin-top: 2.5rem; }
+.gd-card { background: rgba(16, 23, 54, 0.5); border: 2px solid rgba(255, 255, 255, 0.18); display: block; padding: 1.5rem; text-decoration: none; transition: border-color 0.2s, background-color 0.2s; }
+a.gd-card:hover { background: rgba(16, 23, 54, 0.85); border-color: rgba(119, 210, 182, 0.65); }
+.gd-card h3 { color: #fff; font-family: var(--font-display); font-size: 1.3rem; margin-top: 0.7rem; }
+.gd-card p { color: rgba(255, 255, 255, 0.7); font-size: 0.92rem; line-height: 1.68; margin-top: 0.7rem; }
+.gd-card p strong { color: #fff; }
+.gd-faq { border-top: 1px solid rgba(255, 255, 255, 0.14); margin-top: 2rem; }
+.gd-faq details { border-bottom: 1px solid rgba(255, 255, 255, 0.14); }
+.gd-faq summary { color: #fff; cursor: pointer; font-size: 1rem; font-weight: 600; list-style: none; padding: 1.15rem 2.5rem 1.15rem 0.25rem; position: relative; }
+.gd-faq summary::-webkit-details-marker { display: none; }
+.gd-faq summary::after { color: #77d2b6; content: "+"; font-size: 1.4rem; position: absolute; right: 0.4rem; top: 50%; transform: translateY(-50%); }
+.gd-faq details[open] summary::after { content: "\2013"; }
+.gd-faq .a { color: rgba(255, 255, 255, 0.72); font-size: 0.94rem; line-height: 1.78; max-width: 46rem; padding: 0 0.25rem 1.35rem; }
+.gd-cta { align-items: center; border: 2px solid #77d2b6; display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: space-between; margin-top: 4rem; padding: 2rem; }
+.gd-cta h2 { color: #fff; font-family: var(--font-display); font-size: clamp(1.3rem, 2.6vw, 1.9rem); }
+.gd-cta p { color: rgba(255, 255, 255, 0.7); font-size: 0.92rem; margin-top: 0.6rem; max-width: 34rem; }
+.gd-note { background: rgba(220, 184, 119, 0.07); border-left: 3px solid #dcb877; color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; line-height: 1.72; margin-top: 2.5rem; padding: 0.9rem 1.1rem; }
+@media (max-width: 560px) { .gd-cta { padding: 1.4rem; } }
